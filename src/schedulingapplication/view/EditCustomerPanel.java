@@ -32,6 +32,7 @@ public class EditCustomerPanel extends javax.swing.JPanel{
 
     public void initComponents() throws Exception{
         
+               
         Connection con = TestConnection.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName, a.address, a.address2, a.phone, a.postalCode, ci.city\n" +
