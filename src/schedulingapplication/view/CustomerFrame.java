@@ -85,6 +85,8 @@ public class CustomerFrame extends JFrame {
         setJMenuBar(jmb);
     }
     
+    //TODO move this to EditCustomerPanel using this https://stackoverflow.com/questions/27271234/how-can-i-open-a-jpanel-from-a-menu
+    
     public static DefaultTableModel buildTableModel(ResultSet rs)
         throws SQLException {
 
@@ -112,6 +114,7 @@ public class CustomerFrame extends JFrame {
 }
     
     private void editCustomer(){
+        
         try {
             Connection con = TestConnection.getConnection();
             Statement stmt = con.createStatement();
