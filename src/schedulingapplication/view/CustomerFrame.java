@@ -6,10 +6,16 @@
 package schedulingapplication.view;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,8 +27,10 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import schedulingapplication.dao.CustomerDAO;
+import schedulingapplication.dao.TestConnection;
 import schedulingapplication.model.Appointment;
 import schedulingapplication.model.Schedule;
+import static schedulingapplication.view.EditCustomerPanel.buildTableModel;
 
 /**
  *
@@ -67,7 +75,7 @@ public class CustomerFrame extends JFrame {
         jmReport.add(jmiSchedule);
         jmView.add(jmiMonthlyView);
         jmView.add(jmiWeeklyView);
-        jmEdit.add(jmEdit);
+        jmEdit.add(jmiEditCustomer);
         jmFile.add(jmiExit);
         jmb.add(jmFile);
         jmb.add(jmReport);
@@ -77,8 +85,46 @@ public class CustomerFrame extends JFrame {
         setJMenuBar(jmb);
     }
     
+    public static DefaultTableModel buildTableModel(ResultSet rs)
+        throws SQLException {
+
+    ResultSetMetaData metaData = rs.getMetaData();
+
+    // names of columns
+    Vector<String> columnNames = new Vector<String>();
+    int columnCount = metaData.getColumnCount();
+    for (int column = 1; column <= columnCount; column++) {
+        columnNames.add(metaData.getColumnName(column));
+    }
+
+    // data of the table
+    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+    while (rs.next()) {
+        Vector<Object> vector = new Vector<Object>();
+        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+            vector.add(rs.getObject(columnIndex));
+        }
+        data.add(vector);
+    }
+
+    return new DefaultTableModel(data, columnNames);
+
+}
+    
     private void editCustomer(){
-        //todo implement
+        try {
+            Connection con = TestConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName, a.address, a.address2, a.phone, a.postalCode, ci.city\n" +
+            "from `U03q1A`.`customer` c\n" +
+            "join `U03q1A`.`address` a on c.addressId=a.addressId\n" +
+            "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
+            JTable table = new JTable(buildTableModel(rs));
+            JOptionPane.showMessageDialog(null, new JScrollPane(table));
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void monthlyView() {
