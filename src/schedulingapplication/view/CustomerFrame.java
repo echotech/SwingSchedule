@@ -50,6 +50,9 @@ public class CustomerFrame extends JFrame {
         JMenu jmFile = new JMenu("File");
         JMenu jmReport = new JMenu("Report");
         JMenu jmView = new JMenu("View");
+        JMenu jmEdit = new JMenu("Edit");
+        JMenuItem jmiEditCustomer = new JMenuItem("Edit Customer");
+        jmiEditCustomer.addActionListener(e->editCustomer());
         JMenuItem jmiNumTypesByMonths = new JMenuItem("Number Types By Months");
         jmiNumTypesByMonths.addActionListener(e -> reportTypesByMonth());
         JMenuItem jmiSchedule = new JMenuItem("Schedule");
@@ -64,12 +67,18 @@ public class CustomerFrame extends JFrame {
         jmReport.add(jmiSchedule);
         jmView.add(jmiMonthlyView);
         jmView.add(jmiWeeklyView);
+        jmEdit.add(jmEdit);
         jmFile.add(jmiExit);
         jmb.add(jmFile);
         jmb.add(jmReport);
         jmb.add(jmView);
+        jmb.add(jmEdit);
 
         setJMenuBar(jmb);
+    }
+    
+    private void editCustomer(){
+        //todo implement
     }
 
     private void monthlyView() {
