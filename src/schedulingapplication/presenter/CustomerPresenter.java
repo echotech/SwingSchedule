@@ -22,12 +22,14 @@ import schedulingapplication.model.Country;
 import schedulingapplication.model.Customer;
 import schedulingapplication.model.Incrementtypes;
 import schedulingapplication.model.Reminder;
+import schedulingapplication.model.User;
 import schedulingapplication.view.CustomerFrame;
 
 /**
  *
  */
 public class CustomerPresenter implements ActionListener {
+    
 
     private Customer model;
 
@@ -37,6 +39,8 @@ public class CustomerPresenter implements ActionListener {
         this.model = model;
         this.view = view;
     }
+    
+    private User userName;
 
     public void initView() {
         view.getPanel().getJbAddCountry().setActionCommand("addcountry");
@@ -316,6 +320,7 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
+    //TODO add logic that makes current user created by and current date updated by.
     public void addCustomer() {
         try {
              int id;
@@ -323,32 +328,30 @@ public class CustomerPresenter implements ActionListener {
             String createdBy;
             LocalDate lastUpdate;
             String lastUpdateBy;
+            
             try {
                 id = Integer.parseInt(view.getPanel().getId().getText().trim());
             } catch (Exception exc) {
                 throw new Exception("Enter id!");
             }
             try {
-                createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                //Old way manually setting date time.
+                //createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                createDate=LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception("Select create date!");
             }
 
-            createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
+            //Old way manually set user
+            //createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
+            
+            userName=getUsername();
+            createdBy = this.getUsername();
             if (createdBy.length() == 0) {
                 throw new Exception("Enter created by!");
             }
 
-            try {
-                lastUpdate = LocalDateTime.ofInstant(view.getPanel().getDpLastUpdate().getDate().toInstant(), ZoneId.systemDefault()).toLocalDate();
-            } catch (Exception exc) {
-                throw new Exception("Select last update date!");
-            }
-
-            lastUpdateBy = view.getPanel().getJtfLastUpdateBy().getText().trim();
-            if (lastUpdateBy.length() == 0) {
-                throw new Exception("Enter last update by!");
-            }
+           
             String name = view.getPanel().getJtfCustName().getText().trim();
             if (name.length() == 0) {
                 throw new Exception ("Enter name!");
@@ -357,8 +360,7 @@ public class CustomerPresenter implements ActionListener {
                     id,
                     createDate,
                     createdBy,
-                   lastUpdate,
-                    lastUpdateBy,
+                   
                     name,
                     view.getPanel().getJchbActive().isSelected(),
                     ((Address) view.getPanel().getJcbAddresses().getSelectedItem()).getId());
@@ -375,8 +377,7 @@ public class CustomerPresenter implements ActionListener {
              int id;
             LocalDateTime createDate;
             String createdBy;
-            LocalDate lastUpdate;
-            String lastUpdateBy;
+            
             try {
                 id = Integer.parseInt(view.getPanel().getId().getText().trim());
             } catch (Exception exc) {
@@ -393,16 +394,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            try {
-                lastUpdate = LocalDateTime.ofInstant(view.getPanel().getDpLastUpdate().getDate().toInstant(), ZoneId.systemDefault()).toLocalDate();
-            } catch (Exception exc) {
-                throw new Exception("Select last update date!");
-            }
-
-            lastUpdateBy = view.getPanel().getJtfLastUpdateBy().getText().trim();
-            if (lastUpdateBy.length() == 0) {
-                throw new Exception("Enter last update by!");
-            }
+            
             String addr1, postCode, phone;
             addr1 = view.getPanel().getJtfAddress1().getText().trim();
             postCode = view.getPanel().getJtfPostalCode().getText().trim();
@@ -421,8 +413,6 @@ public class CustomerPresenter implements ActionListener {
                     id,
                     createDate,
                     createdBy,
-                    lastUpdate,
-                    lastUpdateBy,
                     addr1,
                     view.getPanel().getJtfAddress2().getText().trim(),
                     ((City) view.getPanel().getJcbCities().getSelectedItem()).getId(),
@@ -459,16 +449,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            try {
-                lastUpdate = LocalDateTime.ofInstant(view.getPanel().getDpLastUpdate().getDate().toInstant(), ZoneId.systemDefault()).toLocalDate();
-            } catch (Exception exc) {
-                throw new Exception("Select last update date!");
-            }
-
-            lastUpdateBy = view.getPanel().getJtfLastUpdateBy().getText().trim();
-            if (lastUpdateBy.length() == 0) {
-                throw new Exception("Enter last update by!");
-            }
+            
             String countryName =  view.getPanel().getJtfCountry().getText().trim();
             if (countryName.length() == 0) {
                 throw new Exception("Enter country!");
@@ -477,8 +458,6 @@ public class CustomerPresenter implements ActionListener {
                     id,
                     createDate,
                     createdBy,
-                    lastUpdate,
-                    lastUpdateBy,
                     countryName);
             model.addCountry(country);
             updateCountries();
@@ -523,16 +502,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            try {
-                lastUpdate = LocalDateTime.ofInstant(view.getPanel().getDpLastUpdate().getDate().toInstant(), ZoneId.systemDefault()).toLocalDate();
-            } catch (Exception exc) {
-                throw new Exception("Select last update date!");
-            }
-
-            lastUpdateBy = view.getPanel().getJtfLastUpdateBy().getText().trim();
-            if (lastUpdateBy.length() == 0) {
-                throw new Exception("Enter last update by!");
-            }
+            
             String cityName =  view.getPanel().getJtfCity().getText().trim();
             if (cityName.length() == 0) {
                 throw new Exception("Enter city!");
@@ -541,8 +511,6 @@ public class CustomerPresenter implements ActionListener {
                     id,
                     createDate,
                    createdBy,
-                    lastUpdate,
-                    lastUpdateBy,
                     cityName,
                     ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
             model.addCity(city);

@@ -19,9 +19,8 @@ public class City extends ScheduleItem {
     private int countryId;
     
     public City(int id, LocalDateTime createDate, String createdBy, 
-            LocalDate lastUpdate, String lastUpdateBy, String city, 
-            int countryId) {
-        super(id, createDate, createdBy, lastUpdate, lastUpdateBy);
+            String city, int countryId) {
+        super(id, createDate, createdBy);
         this.city = city;
         this.countryId = countryId;
     }

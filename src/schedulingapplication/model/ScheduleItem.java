@@ -24,13 +24,11 @@ public abstract class ScheduleItem {
 
     private String lastUpdateBy;
 
-    public ScheduleItem (int id, LocalDateTime createDate, String createdBy, 
-            LocalDate lastUpdate, String lastUpdateBy) {
+    public ScheduleItem (int id, LocalDateTime createDate, String createdBy) {
         this.id = id;
         this.createDate = createDate;
         this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdateBy = lastUpdateBy;
+        
     }
     
     public ScheduleItem() {

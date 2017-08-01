@@ -31,10 +31,9 @@ public class Appointment extends ScheduleItem {
     private LocalDateTime end;
     
     public Appointment(int id, LocalDateTime createDate, String createdBy, 
-            LocalDate lastUpdate, String lastUpdateBy, int customerId, 
-            String title, String description, String location, String contact, 
+            int customerId, String title, String description, String location, String contact, 
             String url, LocalDateTime start, LocalDateTime end) {
-        super(id, createDate, createdBy, lastUpdate, lastUpdateBy);
+        super(id, createDate, createdBy);
         this.customerId = customerId;
         this.title = title;
         this.description = description;
