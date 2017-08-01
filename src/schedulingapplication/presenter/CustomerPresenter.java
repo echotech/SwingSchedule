@@ -196,7 +196,7 @@ public class CustomerPresenter implements ActionListener {
             LocalDateTime createDate;
            
             try {
-                createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                createDate = LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception ("Enter create date!");
             }
@@ -252,7 +252,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter id!");
             }
             try {
-                createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                createDate = LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception("Select create date!");
             }
@@ -368,7 +368,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter id!");
             }
             try {
-                createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                createDate = LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception("Select create date!");
             }
@@ -415,15 +415,14 @@ public class CustomerPresenter implements ActionListener {
               int id;
             LocalDateTime createDate;
             String createdBy;
-            LocalDate lastUpdate;
-            String lastUpdateBy;
+            
             try {
                 id = Integer.parseInt(view.getPanel().getId().getText().trim());
             } catch (Exception exc) {
                 throw new Exception("Enter id!");
             }
             try {
-                createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                createDate = LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception("Select create date!");
             }
@@ -476,7 +475,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter id!");
             }
             try {
-                createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+                createDate = LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception("Select create date!");
             }
