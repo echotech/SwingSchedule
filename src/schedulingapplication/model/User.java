@@ -21,10 +21,8 @@ public class User extends ScheduleItem {
     
     private boolean active;
     
-    public User(int id, LocalDateTime createDate, String createdBy, 
-            LocalDate lastUpdate, String lastUpdateBy, String username, 
-            String password, boolean active) {
-        super(id, createDate, createdBy, lastUpdate, lastUpdateBy);
+    public User(int id, LocalDateTime createDate, String createdBy, String username, String password, boolean active) {
+        super(id, createDate, createdBy);
         this.username = username;
         this.password = password;
         this.active = active;
