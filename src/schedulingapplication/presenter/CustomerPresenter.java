@@ -245,8 +245,7 @@ public class CustomerPresenter implements ActionListener {
             int id;
             LocalDateTime createDate;
             String createdBy;
-            LocalDate lastUpdate;
-            String lastUpdateBy;
+            
             try {
                 id = Integer.parseInt(view.getPanel().getId().getText().trim());
             } catch (Exception exc) {
@@ -263,17 +262,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            try {
-                lastUpdate = LocalDateTime.ofInstant(view.getPanel().getDpLastUpdate().getDate().toInstant(), ZoneId.systemDefault()).toLocalDate();
-            } catch (Exception exc) {
-                throw new Exception("Select last update date!");
-            }
-
-            lastUpdateBy = view.getPanel().getJtfLastUpdateBy().getText().trim();
-            if (lastUpdateBy.length() == 0) {
-                throw new Exception("Enter last update by!");
-            }
-
+           
             String title, description, location, contact, url;
             title = view.getPanel().getJtfTitle().getText().trim();
             description = view.getPanel().getJtaDescription().getText().trim();
@@ -301,8 +290,6 @@ public class CustomerPresenter implements ActionListener {
                     id,
                     createDate,
                     createdBy,
-                    lastUpdate,
-                    lastUpdateBy,
                     ((Customer) view.getPanel().getJcbCustomers().getSelectedItem()).getId(),
                     title,
                     description,
@@ -326,8 +313,7 @@ public class CustomerPresenter implements ActionListener {
              int id;
             LocalDateTime createDate;
             String createdBy;
-            LocalDate lastUpdate;
-            String lastUpdateBy;
+            
             
             try {
                 id = Integer.parseInt(view.getPanel().getId().getText().trim());
@@ -342,11 +328,9 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Select create date!");
             }
 
-            //Old way manually set user
-            //createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
+           
+            createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
             
-            userName=getUsername();
-            createdBy = this.getUsername();
             if (createdBy.length() == 0) {
                 throw new Exception("Enter created by!");
             }
