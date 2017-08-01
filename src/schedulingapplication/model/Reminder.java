@@ -6,6 +6,7 @@
 package schedulingapplication.model;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Reminder {
     private int snoozeIncrement;
     
     private int snoozeIncrementTypeId;
-    
+    private static AtomicInteger nextId = new AtomicInteger(0);
     private int appointmentId;
     
     private String createdBy;
@@ -28,10 +29,10 @@ public class Reminder {
     
     private String remindercol;
 
-    public Reminder(int reminderId, LocalDateTime reminderDate, 
+    public Reminder(LocalDateTime reminderDate, 
             int snoozeIncrement, int snoozeIncrementTypeId, int appointmentId, 
             String createdBy, LocalDateTime createdDate, String remindercol) {
-        this.reminderId = reminderId;
+        this.reminderId = nextId.incrementAndGet();
         this.reminderDate = reminderDate;
         this.snoozeIncrement = snoozeIncrement;
         this.snoozeIncrementTypeId = snoozeIncrementTypeId;

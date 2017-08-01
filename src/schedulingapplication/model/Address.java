@@ -8,6 +8,7 @@ package schedulingapplication.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -24,14 +25,15 @@ public class Address extends ScheduleItem {
     
     private String phone;
     
-    public Address(int id, LocalDateTime createDate, String createdBy, 
+    public Address(LocalDateTime createDate, String createdBy, 
             String address,String address2, int cityId, String postalCode, String phone) {
-        super(id, createDate, createdBy);
+        super(createDate, createdBy);
         this.address = address;
         this.address2 = address2;
         this.cityId = cityId;
         this.postalCode = postalCode;
         this.phone = phone;
+        
     }
     
     public Address() {

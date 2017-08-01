@@ -16,8 +16,8 @@ public class Country extends ScheduleItem {
     
     private String country;
     
-    public Country(int id, LocalDateTime createDate, String createdBy, String country) {
-        super(id, createDate, createdBy);
+    public Country(LocalDateTime createDate, String createdBy, String country) {
+        super(createDate, createdBy);
         this.country = country;
     }
     

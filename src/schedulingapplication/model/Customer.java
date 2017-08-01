@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
 import schedulingapplication.dao.CustomerDAO;
 
 /**
@@ -17,17 +18,18 @@ import schedulingapplication.dao.CustomerDAO;
 public class Customer extends ScheduleItem {
 
     private String name;
-
+   
     private boolean active;
 
     private int addressId;
 
-    public Customer(int id, LocalDateTime createDate, String createdBy,
+    public Customer(LocalDateTime createDate, String createdBy,
            String name, boolean active, int addressId) {
-        super(id, createDate, createdBy);
+        super(createDate, createdBy);
         this.name = name;
         this.active = active;
         this.addressId = addressId;
+        
     }
 
     public Customer() {

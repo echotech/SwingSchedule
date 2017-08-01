@@ -8,6 +8,7 @@ package schedulingapplication.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.time.LocalTime;
 public abstract class ScheduleItem {
 
     private int id;
-
+    private static AtomicInteger nextId = new AtomicInteger(0);
     private LocalDateTime createDate;
 
     private String createdBy;
@@ -24,8 +25,8 @@ public abstract class ScheduleItem {
 
     private String lastUpdateBy;
 
-    public ScheduleItem (int id, LocalDateTime createDate, String createdBy) {
-        this.id = id;
+    public ScheduleItem (LocalDateTime createDate, String createdBy) {
+        this.id = nextId.incrementAndGet();
         this.createDate = createDate;
         this.createdBy = createdBy;
         
