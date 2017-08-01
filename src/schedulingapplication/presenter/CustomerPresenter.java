@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import schedulingapplication.model.Address;
 import schedulingapplication.model.Appointment;
 import schedulingapplication.model.City;
@@ -40,7 +41,8 @@ public class CustomerPresenter implements ActionListener {
         this.view = view;
     }
     
-    private User userName;
+    private static AtomicInteger nextCustId = new AtomicInteger(0);
+    private static AtomicInteger nextIncId = new AtomicInteger(0);
 
     public void initView() {
         view.getPanel().getJbAddCountry().setActionCommand("addcountry");
@@ -156,7 +158,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter increment type description!");
             }
              try {
-                id = Integer.parseInt(view.getPanel().getJtfTypeId().getText().trim());
+                id = nextIncId.incrementAndGet();
             } catch (Exception exc) {
                 throw new Exception ("Enter increment type id!");
             }
@@ -316,9 +318,9 @@ public class CustomerPresenter implements ActionListener {
             
             
             try {
-                id = Integer.parseInt(view.getPanel().getId().getText().trim());
+                id = nextCustId.incrementAndGet();
             } catch (Exception exc) {
-                throw new Exception("Enter id!");
+                throw new Exception("Customer ID error!");
             }
             try {
                 //Old way manually setting date time.
