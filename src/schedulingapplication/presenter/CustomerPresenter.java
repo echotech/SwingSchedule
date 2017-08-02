@@ -444,7 +444,6 @@ public class CustomerPresenter implements ActionListener {
 
     private void addCity() {
         try {
-             int id;
             LocalDateTime createDate;
             String createdBy;
             LocalDate lastUpdate;
@@ -461,13 +460,12 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            
             String cityName =  view.getPanel().getJtfCity().getText().trim();
             if (cityName.length() == 0) {
                 throw new Exception("Enter city!");
             }
             City city = new City(createDate, createdBy, cityName,
-                    ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
+                ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
             model.addCity(city);
             updateCities();
             view.getPanel().clearFields();
