@@ -431,23 +431,13 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-    private void updateCities() {
-        try {
-            view.getPanel().getJcbCities().removeAllItems();
-            List<City> cities = model.getCityList();
-            cities.forEach(c -> view.getPanel().getJcbCities().addItem(c));
-        } catch (Exception exc) {
-            view.getPanel().displayError(exc);
-            exc.printStackTrace();
-        }
-    }
+    
 
     private void addCity() {
         try {
             LocalDateTime createDate;
             String createdBy;
-            LocalDate lastUpdate;
-            String lastUpdateBy;
+            
            
             try {
                 createDate = LocalDateTime.now();
@@ -467,7 +457,7 @@ public class CustomerPresenter implements ActionListener {
             City city = new City(createDate, createdBy, cityName,
                 ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
             model.addCity(city);
-            updateCities();
+            
             view.getPanel().clearFields();
 
         } catch (Exception exc) {
