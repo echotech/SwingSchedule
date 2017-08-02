@@ -85,49 +85,10 @@ public class CustomerFrame extends JFrame {
         setJMenuBar(jmb);
     }
     
-    //TODO move this to EditCustomerPanel using this https://stackoverflow.com/questions/27271234/how-can-i-open-a-jpanel-from-a-menu
-    
-    public static DefaultTableModel buildTableModel(ResultSet rs)
-        throws SQLException {
-
-    ResultSetMetaData metaData = rs.getMetaData();
-
-    // names of columns
-    Vector<String> columnNames = new Vector<String>();
-    int columnCount = metaData.getColumnCount();
-    for (int column = 1; column <= columnCount; column++) {
-        columnNames.add(metaData.getColumnName(column));
-    }
-
-    // data of the table
-    Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-    while (rs.next()) {
-        Vector<Object> vector = new Vector<Object>();
-        for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-            vector.add(rs.getObject(columnIndex));
-        }
-        data.add(vector);
-    }
-
-    return new DefaultTableModel(data, columnNames);
-
-}
-    
     private void editCustomer(){
-        
-        try {
-            Connection con = TestConnection.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName, a.address, a.address2, a.phone, a.postalCode, ci.city\n" +
-            "from `U03q1A`.`customer` c\n" +
-            "join `U03q1A`.`address` a on c.addressId=a.addressId\n" +
-            "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
-            JTable table = new JTable(buildTableModel(rs));
-            JOptionPane.showMessageDialog(null, new JScrollPane(table));
-        }
-        catch (Exception e){
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        SwingUtilities.invokeLater(()->{
+        new EditCustomerPanel(("Edit Customer")).setVisible(true);
+    });
     }
 
     private void monthlyView() {

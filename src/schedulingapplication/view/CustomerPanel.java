@@ -6,6 +6,7 @@
 package schedulingapplication.view;
 
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
@@ -58,7 +59,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jtfCity = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jcbCountries = new javax.swing.JComboBox<Country>();
+        jcbCountries = new javax.swing.JComboBox(getAllCountries());
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jcbCustomers = new javax.swing.JComboBox<>();
@@ -104,7 +105,7 @@ public class CustomerPanel extends javax.swing.JPanel {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Customer"));
 
-        jLabel1.setText("Enter name:");
+        jLabel1.setText("Customer name:");
 
         jtfCustName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +114,11 @@ public class CustomerPanel extends javax.swing.JPanel {
         });
 
         jchbActive.setText("Active");
+        jchbActive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jchbActiveActionPerformed(evt);
+            }
+        });
 
         jbAddCustomer.setText("Add Customer");
         jbAddCustomer.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +138,12 @@ public class CustomerPanel extends javax.swing.JPanel {
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Address"));
 
         jLabel12.setText("Enter address: ");
+
+        jtfAddress1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfAddress1ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Enter address2: ");
 
@@ -226,15 +238,16 @@ public class CustomerPanel extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jtfCreatedBy, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jtfCustName, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jchbActive)
@@ -553,6 +566,14 @@ public class CustomerPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCreatedByActionPerformed
 
+    private void jchbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbActiveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jchbActiveActionPerformed
+
+    private void jtfAddress1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAddress1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfAddress1ActionPerformed
+
     public void displayError(Exception exc) {
          JOptionPane.showMessageDialog(this, exc.getMessage(), "Exception occurred",
                 JOptionPane.ERROR_MESSAGE);
@@ -625,6 +646,16 @@ public class CustomerPanel extends javax.swing.JPanel {
     public javax.swing.JComboBox<Country> getJcbCountries() {
         return jcbCountries;
     }
+    // gets all countries
+    public String[] getAllCountries() {
+    String[] countries = new String[Locale.getISOCountries().length];
+    String[] countryCodes = Locale.getISOCountries();
+    for (int i = 0; i < countryCodes.length; i++) {
+        Locale obj = new Locale("", countryCodes[i]);
+        countries[i] = obj.getDisplayCountry();
+    }
+    return countries;
+ }
 
    
 

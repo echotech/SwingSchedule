@@ -11,6 +11,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,13 +22,19 @@ import schedulingapplication.dao.TestConnection;
  *
  * @author jreisner
  */
-public class EditCustomerPanel extends javax.swing.JPanel{
+public class EditCustomerPanel extends JFrame{
     
       /**
      * Creates new form CustomerForm
      */
-    public EditCustomerPanel() throws Exception {
-        initComponents();
+    public EditCustomerPanel(String title) {
+        super(title);
+        try{
+        initComponents();}
+        catch (Exception e){
+            System.out.println("You broke edit customer.");
+        }
+        setLocationRelativeTo(null);
     }
 
     public void initComponents() throws Exception{
@@ -43,7 +50,9 @@ public class EditCustomerPanel extends javax.swing.JPanel{
         JOptionPane.showMessageDialog(null, new JScrollPane(table));
     }
     
- public static DefaultTableModel buildTableModel(ResultSet rs)
+    //TODO move this to EditCustomerPanel using this https://stackoverflow.com/questions/27271234/how-can-i-open-a-jpanel-from-a-menu
+    
+    public static DefaultTableModel buildTableModel(ResultSet rs)
         throws SQLException {
 
     ResultSetMetaData metaData = rs.getMetaData();
@@ -69,6 +78,22 @@ public class EditCustomerPanel extends javax.swing.JPanel{
 
 }
     
+    public void editCustomer(){
+        
+        try {
+            Connection con = TestConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName, a.address, a.address2, a.phone, a.postalCode, ci.city\n" +
+            "from `U03q1A`.`customer` c\n" +
+            "join `U03q1A`.`address` a on c.addressId=a.addressId\n" +
+            "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
+            JTable table = new JTable(buildTableModel(rs));
+            JOptionPane.showMessageDialog(null, new JScrollPane(table));
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
 }
 

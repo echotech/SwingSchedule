@@ -96,9 +96,9 @@ public class CustomerPresenter implements ActionListener {
 
     private void updateAddresses() {
         try {
-            view.getPanel().getJcbAddresses().removeAllItems();
-            List<Address> addresses = model.getAddressList();
-            addresses.forEach(a -> view.getPanel().getJcbAddresses().addItem(a));
+            //view.getPanel().getJcbAddresses().removeAllItems();
+            //List<Address> addresses = model.getAddressList();
+           // addresses.forEach(a -> view.getPanel().getJcbAddresses().addItem(a));
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
@@ -115,9 +115,9 @@ public class CustomerPresenter implements ActionListener {
     }
 
     public void initPresenter() {
-        view.getPanel().getJbAddCountry().addActionListener(this);
-        view.getPanel().getJbAddCity().addActionListener(this);
-        view.getPanel().getJbAddAddress().addActionListener(this);
+       // view.getPanel().getJbAddCountry().addActionListener(this);
+        //view.getPanel().getJbAddCity().addActionListener(this);
+        //view.getPanel().getJbAddAddress().addActionListener(this);
         view.getPanel().getJbAddCustomer().addActionListener(this);
         view.getPanel().getJbAddAppointment().addActionListener(this);
         view.getPanel().getJbAddReminder().addActionListener(this);
@@ -304,6 +304,10 @@ public class CustomerPresenter implements ActionListener {
 
    
     public void addCustomer() {
+        try {addCity();}
+        catch (Exception exc){System.out.println("You can't call addCity that way!");}
+        try {addAddress();}
+        catch (Exception exc){System.out.println("You can't call addAddress that way!");}
         try {
              
             LocalDateTime createDate;
@@ -355,7 +359,8 @@ public class CustomerPresenter implements ActionListener {
             try {
                 createDate = LocalDateTime.now();
             } catch (Exception exc) {
-                throw new Exception("Select create date!");
+                throw new Exception("Enter created date!");
+                
             }
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
@@ -384,7 +389,7 @@ public class CustomerPresenter implements ActionListener {
                     createdBy,
                     addr1,
                     view.getPanel().getJtfAddress2().getText().trim(),
-                    ((City) view.getPanel().getJcbCities().getSelectedItem()).getId(),
+                    ((City) view.getPanel().getJtfCity().getText()).trim()),
                     postCode,
                     phone);
             model.addAddress(address);
@@ -413,7 +418,7 @@ public class CustomerPresenter implements ActionListener {
             }
 
             
-            String countryName =  view.getPanel().getJtfCountry().getText().trim();
+            String countryName =  view.getPanel().getJcbCountries().getSelectedItem().toString();
             if (countryName.length() == 0) {
                 throw new Exception("Enter country!");
             }
