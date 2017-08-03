@@ -30,7 +30,6 @@ import schedulingapplication.view.CustomerFrame;
  *
  */
 public class CustomerPresenter implements ActionListener {
-    
 
     private Customer model;
 
@@ -40,23 +39,23 @@ public class CustomerPresenter implements ActionListener {
         this.model = model;
         this.view = view;
     }
-    
+
     private static AtomicInteger nextCustId = new AtomicInteger(0);
     private static AtomicInteger nextIncId = new AtomicInteger(0);
     private static AtomicInteger nextCityId = new AtomicInteger(0);
     private static AtomicInteger nextAppId = new AtomicInteger(0);
 
     public void initView() {
-        view.getPanel().getJbAddCountry().setActionCommand("addcountry");
-        view.getPanel().getJbAddCity().setActionCommand("addcity");
-        view.getPanel().getJbAddAddress().setActionCommand("addaddress");
+        //view.getPanel().getJbAddCountry().setActionCommand("addcountry");
+        //view.getPanel().getJbAddCity().setActionCommand("addcity");
+        //view.getPanel().getJbAddAddress().setActionCommand("addaddress");
         view.getPanel().getJbAddCustomer().setActionCommand("addcustomer");
         view.getPanel().getJbAddAppointment().setActionCommand("addappointment");
         view.getPanel().getJbAddReminder().setActionCommand("addreminder");
         view.getPanel().getJbAddIncrement().setActionCommand("addincrement");
 
         updateCountries();
-        updateCities();
+        //updateCities();
         updateAddresses();
         updateCustomers();
         updateAppointments();
@@ -98,7 +97,7 @@ public class CustomerPresenter implements ActionListener {
         try {
             //view.getPanel().getJcbAddresses().removeAllItems();
             //List<Address> addresses = model.getAddressList();
-           // addresses.forEach(a -> view.getPanel().getJcbAddresses().addItem(a));
+            // addresses.forEach(a -> view.getPanel().getJcbAddresses().addItem(a));
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
@@ -115,7 +114,7 @@ public class CustomerPresenter implements ActionListener {
     }
 
     public void initPresenter() {
-       // view.getPanel().getJbAddCountry().addActionListener(this);
+        // view.getPanel().getJbAddCountry().addActionListener(this);
         //view.getPanel().getJbAddCity().addActionListener(this);
         //view.getPanel().getJbAddAddress().addActionListener(this);
         view.getPanel().getJbAddCustomer().addActionListener(this);
@@ -152,17 +151,17 @@ public class CustomerPresenter implements ActionListener {
     }
 
     public void addIncrement() {
-       
-            try {
+
+        try {
             int id;
             String desc = view.getPanel().getJtfDescription().getText().trim();
             if (desc.length() == 0) {
                 throw new Exception("Enter increment type description!");
             }
-             try {
+            try {
                 id = nextIncId.incrementAndGet();
             } catch (Exception exc) {
-                throw new Exception ("Enter increment type id!");
+                throw new Exception("Enter increment type id!");
             }
             Incrementtypes type = new Incrementtypes(
                     id,
@@ -178,39 +177,38 @@ public class CustomerPresenter implements ActionListener {
 
     public void addReminder() {
         try {
-            
+
             LocalDateTime date;
             try {
                 date = LocalDateTime.ofInstant(view.getPanel().getDpEnterRemDate().getDate().toInstant(), ZoneId.systemDefault());
             } catch (Exception exc) {
-                throw new Exception ("Enter reminder date!");
+                throw new Exception("Enter reminder date!");
             }
-           
+
             int incr;
-           try {
+            try {
                 incr = Integer.parseInt(view.getPanel().getJtfSnoozeIncr().getText().trim());
             } catch (Exception exc) {
-                throw new Exception ("Enter snooze increment!");
+                throw new Exception("Enter snooze increment!");
             }
             LocalDateTime createDate;
-           
+
             try {
                 createDate = LocalDateTime.now();
             } catch (Exception exc) {
-                throw new Exception ("Enter create date!");
+                throw new Exception("Enter create date!");
             }
-            String createdBy =  view.getPanel().getJtfCreatedBy().getText().trim();
-            if (createdBy.length() == 0) { 
-                throw new Exception ("Enter created by!");
+            String createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
+            if (createdBy.length() == 0) {
+                throw new Exception("Enter created by!");
             }
             Reminder reminder = new Reminder(
-                    
                     date,
                     incr,
                     ((Incrementtypes) view.getPanel().getJcbTypes().getSelectedItem()).getIncrementTypeId(),
                     ((Appointment) view.getPanel().getJcbAppointments().getSelectedItem()).getId(),
                     createdBy,
-                   createDate,
+                    createDate,
                     "col");
             model.addReminder(reminder);
             view.getPanel().clearFields();
@@ -241,11 +239,9 @@ public class CustomerPresenter implements ActionListener {
             ldtStart = LocalDateTime.of(startDate, startTime);
             ldtEnd = LocalDateTime.of(endDate, endTime);
 
-            
             LocalDateTime createDate;
             String createdBy;
-            
-            
+
             try {
                 createDate = LocalDateTime.now();
             } catch (Exception exc) {
@@ -253,18 +249,18 @@ public class CustomerPresenter implements ActionListener {
             }
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
+            
             if (createdBy.length() == 0) {
                 throw new Exception("Enter created by!");
             }
 
-           
             String title, description, location, contact, url;
             title = view.getPanel().getJtfTitle().getText().trim();
             description = view.getPanel().getJtaDescription().getText().trim();
             location = view.getPanel().getJtaLocation().getText().trim();
             contact = view.getPanel().getJtaContact().getText().trim();
             url = view.getPanel().getJtfUrl().getText().trim();
-            
+
             if (title.length() == 0) {
                 throw new Exception("Enter title!");
             }
@@ -280,9 +276,8 @@ public class CustomerPresenter implements ActionListener {
             if (url.length() == 0) {
                 throw new Exception("Enter url!");
             }
-            
+
             Appointment appointment = new Appointment(
-                    
                     createDate,
                     createdBy,
                     ((Customer) view.getPanel().getJcbCustomers().getSelectedItem()).getId(),
@@ -302,47 +297,47 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-   
     public void addCustomer() {
-        try {addCity();}
-        catch (Exception exc){System.out.println("You can't call addCity that way!");}
-        try {addAddress();}
-        catch (Exception exc){System.out.println("You can't call addAddress that way!");}
         try {
-             
+            addCity();
+        } catch (Exception exc) {
+            System.out.println("You can't call addCity that way!");
+        }
+        try {
+            addAddress();
+        } catch (Exception exc) {
+            System.out.println("You can't call addAddress that way!");
+        }
+        try {
+
             LocalDateTime createDate;
             String createdBy;
-            
-            
-           
-            try {
-                //Old way manually setting date time.
-                //createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
-                createDate=LocalDateTime.now();
-            } catch (Exception exc) {
-                throw new Exception("Select create date!");
-            }
 
-           
+            //Old way manually setting date time.
+            //createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
+            createDate = LocalDateTime.now();
+
+
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
             
+
             if (createdBy.length() == 0) {
                 throw new Exception("Enter created by!");
             }
 
-           
             String name = view.getPanel().getJtfCustName().getText().trim();
             if (name.length() == 0) {
-                throw new Exception ("Enter name!");
+                throw new Exception("Enter name!");
             }
+          
             Customer customer = new Customer(
                     createDate,
                     createdBy,
                     name,
-                    view.getPanel().getJchbActive().isSelected(),
-                    ((Address) view.getPanel().getJcbAddresses().getSelectedItem()).getId());
+                    view.getPanel().getJchbActive().isSelected());
             model.addCustomer(customer);
             view.getPanel().clearFields();
+
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
@@ -351,16 +346,15 @@ public class CustomerPresenter implements ActionListener {
 
     public void addAddress() {
         try {
-             
+
             LocalDateTime createDate;
             String createdBy;
-            
-            
+
             try {
                 createDate = LocalDateTime.now();
             } catch (Exception exc) {
                 throw new Exception("Enter created date!");
-                
+
             }
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
@@ -368,7 +362,6 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            
             String addr1, postCode, phone;
             addr1 = view.getPanel().getJtfAddress1().getText().trim();
             postCode = view.getPanel().getJtfPostalCode().getText().trim();
@@ -384,12 +377,10 @@ public class CustomerPresenter implements ActionListener {
             }
             
             Address address = new Address(
-                    
                     createDate,
                     createdBy,
                     addr1,
                     view.getPanel().getJtfAddress2().getText().trim(),
-                    ((City) view.getPanel().getJtfCity().getText()).trim()),
                     postCode,
                     phone);
             model.addAddress(address);
@@ -402,10 +393,10 @@ public class CustomerPresenter implements ActionListener {
 
     private void addCountry() {
         try {
-              
+
             LocalDateTime createDate;
             String createdBy;
-            
+
             try {
                 createDate = LocalDateTime.now();
             } catch (Exception exc) {
@@ -417,13 +408,11 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            
-            String countryName =  view.getPanel().getJcbCountries().getSelectedItem().toString();
+            String countryName = view.getPanel().getJcbCountries().getSelectedItem().toString();
             if (countryName.length() == 0) {
                 throw new Exception("Enter country!");
             }
             Country country = new Country(
-                    
                     createDate,
                     createdBy,
                     countryName);
@@ -436,14 +425,11 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-    
-
     private void addCity() {
         try {
             LocalDateTime createDate;
             String createdBy;
-            
-           
+
             try {
                 createDate = LocalDateTime.now();
             } catch (Exception exc) {
@@ -455,14 +441,13 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            String cityName =  view.getPanel().getJtfCity().getText().trim();
+            String cityName = view.getPanel().getJtfCity().getText().trim();
             if (cityName.length() == 0) {
                 throw new Exception("Enter city!");
             }
-            City city = new City(createDate, createdBy, cityName,
-                ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
+            City city = new City(createDate, createdBy, cityName);
             model.addCity(city);
-            
+
             view.getPanel().clearFields();
 
         } catch (Exception exc) {

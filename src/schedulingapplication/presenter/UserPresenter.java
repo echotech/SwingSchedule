@@ -94,5 +94,4 @@ public class UserPresenter implements ActionListener {
             fw.write (model.toString() + "\r\nLogin: " + Timestamp.valueOf(LocalDateTime.now()) + "\r\n\r\n");
         }
     }
-
 }
