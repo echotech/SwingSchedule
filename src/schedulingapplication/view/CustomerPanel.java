@@ -59,7 +59,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jtfCity = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jcbCountries = new javax.swing.JComboBox(getAllCountries());
+        jcbCountry = new javax.swing.JComboBox(getAllCountries());
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jcbCustomers = new javax.swing.JComboBox<>();
@@ -157,9 +157,9 @@ public class CustomerPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Select country:");
 
-        jcbCountries.addActionListener(new java.awt.event.ActionListener() {
+        jcbCountry.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbCountriesActionPerformed(evt);
+                jcbCountryActionPerformed(evt);
             }
         });
 
@@ -192,7 +192,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jcbCountries, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jcbCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -220,7 +220,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                     .addComponent(jtfCity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbCountries, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -233,7 +233,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                 .addGap(28, 28, 28))
         );
 
-        jcbCountries.getAccessibleContext().setAccessibleDescription("");
+        jcbCountry.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -560,9 +560,9 @@ public class CustomerPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCustNameActionPerformed
 
-    private void jcbCountriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCountriesActionPerformed
+    private void jcbCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCountryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcbCountriesActionPerformed
+    }//GEN-LAST:event_jcbCountryActionPerformed
 
     private void jchbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbActiveActionPerformed
         // TODO add your handling code here:
@@ -623,7 +623,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JButton jbAddIncrement;
     private javax.swing.JButton jbAddReminder;
     private javax.swing.JComboBox<Appointment> jcbAppointments;
-    private javax.swing.JComboBox<Country> jcbCountries;
+    private javax.swing.JComboBox<Country> jcbCountry;
     private javax.swing.JComboBox<Customer> jcbCustomers;
     private javax.swing.JComboBox<Incrementtypes> jcbTypes;
     private javax.swing.JCheckBox jchbActive;
@@ -645,9 +645,10 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JSpinner startTimeApp;
     // End of variables declaration//GEN-END:variables
 
-    public javax.swing.JComboBox<Country> getJcbCountries() {
-        return jcbCountries;
+    public javax.swing.JComboBox getJcbCountry() {
+        return jcbCountry;
     }
+
     // gets all countries
     public String[] getAllCountries() {
     String[] countries = new String[Locale.getISOCountries().length];

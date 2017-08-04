@@ -54,9 +54,9 @@ public class CustomerPresenter implements ActionListener {
         view.getPanel().getJbAddReminder().setActionCommand("addreminder");
         view.getPanel().getJbAddIncrement().setActionCommand("addincrement");
 
-        updateCountries();
+        //updateCountries();
         //updateCities();
-        updateAddresses();
+        //updateAddresses();
         updateCustomers();
         updateAppointments();
         updateTypes();
@@ -103,7 +103,7 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-    private void updateCountries() {
+   /* private void updateCountries() {
         try {
             view.getPanel().getJcbCountries().removeAllItems();
             List<Country> countries = model.getCountryList();
@@ -111,7 +111,7 @@ public class CustomerPresenter implements ActionListener {
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
-    }
+    } */
 
     public void initPresenter() {
         // view.getPanel().getJbAddCountry().addActionListener(this);
@@ -408,7 +408,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter created by!");
             }
 
-            String countryName = view.getPanel().getJcbCountries().getSelectedItem().toString();
+            String countryName = view.getPanel().getJcbCountry().getSelectedItem().toString();
             if (countryName.length() == 0) {
                 throw new Exception("Enter country!");
             }
@@ -417,7 +417,7 @@ public class CustomerPresenter implements ActionListener {
                     createdBy,
                     countryName);
             model.addCountry(country);
-            updateCountries();
+            //updateCountries();
             view.getPanel().clearFields();
 
         } catch (Exception exc) {

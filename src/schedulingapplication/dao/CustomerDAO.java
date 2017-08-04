@@ -31,6 +31,7 @@ import schedulingapplication.model.Schedule;
 public class CustomerDAO {
 
     public static List<Country> getCountryList() throws Exception {
+        
         List<Country> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
         String sql = "select `countryId`, `country` from `U03q1A`.`country`";
@@ -42,7 +43,7 @@ public class CustomerDAO {
             country.setCountry(rs.getString(2));
             list.add(country);
         }
-        return list;
+        return list; 
     }
 
     public static List<Address> getAddressList() throws Exception {
