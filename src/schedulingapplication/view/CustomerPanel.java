@@ -679,7 +679,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     public void clearFields() {
         
         
-        jtfCreatedBy.setText("");
+        //jtfCreatedBy.setText("");
         jtfCity.setText("");
         jtfAddress1.setText("");
         jtfAddress2.setText("");

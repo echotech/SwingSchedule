@@ -106,6 +106,8 @@ public class CustomerPresenter implements ActionListener {
     private void updateCountries() {
         try {
             //TODO update the list of countries so it has ids for all the countries
+            //List<Country> countries = model.getCountryList();
+            
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
@@ -425,8 +427,8 @@ public class CustomerPresenter implements ActionListener {
                     createdBy,
                     countryName);
             model.addCountry(country);
-            //updateCountries();
-            //view.getPanel().clearFields();
+            
+            view.getPanel().clearFields();
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);

@@ -25,6 +25,8 @@ public class Main {
             presenter.initView();
             presenter.initPresenter();
             view.setVisible(true);
+            
+            
         });
     }
 }
