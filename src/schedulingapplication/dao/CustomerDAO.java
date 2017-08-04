@@ -156,7 +156,7 @@ public class CustomerDAO {
         ps.setInt(3, city.getCountryId());
         ps.setDate(4, sqlDate);
         ps.setString(5, city.getCreatedBy());
-        ps.setTimestamp(6, new Timestamp(java.util.Date.from(city.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setTimestamp(6, new Timestamp(java.util.Date.from(city.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(7, city.getCreatedBy());
         ps.executeUpdate();
         } catch (Exception exc){
@@ -179,7 +179,7 @@ public class CustomerDAO {
         Date sqlDate = new Date(address.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(7, sqlDate);
         ps.setString(8, address.getCreatedBy());
-        ps.setTimestamp(9, new Timestamp(java.util.Date.from(address.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setTimestamp(9, new Timestamp(java.util.Date.from(address.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(10, address.getCreatedBy());
         ps.executeUpdate();
         }catch (Exception exc){
@@ -213,7 +213,7 @@ public class CustomerDAO {
                 atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(5, sqlDate);
         ps.setString(6, customer.getCreatedBy());
-        ps.setTimestamp(7, new Timestamp(java.util.Date.from(customer.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setTimestamp(7, new Timestamp(java.util.Date.from(customer.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(8, customer.getCreatedBy());
         if (edit) {
             ps.setInt(9, customer.getId());
@@ -257,7 +257,7 @@ public class CustomerDAO {
         Date sqlDate = new Date(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(10, sqlDate);
         ps.setString(11, appointment.getCreatedBy());
-        ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(13, appointment.getLastUpdateBy());
         ps.executeUpdate();
     }

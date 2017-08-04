@@ -103,15 +103,13 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-   /* private void updateCountries() {
+    private void updateCountries() {
         try {
-            view.getPanel().getJcbCountries().removeAllItems();
-            List<Country> countries = model.getCountryList();
-            countries.forEach(c -> view.getPanel().getJcbCountries().addItem(c));
+            //TODO update the list of countries so it has ids for all the countries
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
-    } */
+    } 
 
     public void initPresenter() {
         // view.getPanel().getJbAddCountry().addActionListener(this);
@@ -299,6 +297,12 @@ public class CustomerPresenter implements ActionListener {
 
     public void addCustomer() {
         try {
+            addCountry();
+        }
+        catch (Exception exc){
+            System.out.println("You did something wrong in CustomerPresenter.addCountry");
+        }
+        try {
             addCity();
         } catch (Exception exc) {
             System.out.println("You can't call addCity that way!");
@@ -337,6 +341,8 @@ public class CustomerPresenter implements ActionListener {
                     view.getPanel().getJchbActive().isSelected());
             model.addCustomer(customer);
             view.getPanel().clearFields();
+            view.revalidate();
+            view.repaint();
 
 
         } catch (Exception exc) {
@@ -366,6 +372,7 @@ public class CustomerPresenter implements ActionListener {
             addr1 = view.getPanel().getJtfAddress1().getText().trim();
             postCode = view.getPanel().getJtfPostalCode().getText().trim();
             phone = view.getPanel().getJtfPhone().getText().trim();
+            int cityId = model.getId();
             if (addr1.length() == 0) {
                 throw new Exception("Enter address1!");
             }
@@ -381,6 +388,7 @@ public class CustomerPresenter implements ActionListener {
                     createdBy,
                     addr1,
                     view.getPanel().getJtfAddress2().getText().trim(),
+                    cityId,
                     postCode,
                     phone);
             model.addAddress(address);
@@ -445,7 +453,10 @@ public class CustomerPresenter implements ActionListener {
             if (cityName.length() == 0) {
                 throw new Exception("Enter city!");
             }
-            City city = new City(createDate, createdBy, cityName);
+            
+            //TODO fix this logic so it actually gets proper countryId, not something random.
+            int countryId = model.getId();
+            City city = new City(createDate, createdBy, cityName, countryId);
             model.addCity(city);
 
             //view.getPanel().clearFields();

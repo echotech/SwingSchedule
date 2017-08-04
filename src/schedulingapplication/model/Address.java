@@ -27,11 +27,11 @@ public class Address extends ScheduleItem {
     private String phone;
     
     public Address(LocalDateTime createDate, String createdBy, 
-            String address,String address2, String postalCode, String phone) {
+            String address,String address2, int cityId, String postalCode, String phone) {
         super(createDate, createdBy);
         this.address = address;
         this.address2 = address2;
-        this.cityId = nextId.incrementAndGet();
+        this.cityId = cityId;
         this.postalCode = postalCode;
         this.phone = phone;
         
