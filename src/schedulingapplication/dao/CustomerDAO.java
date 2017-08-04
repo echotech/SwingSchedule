@@ -123,6 +123,7 @@ public class CustomerDAO {
     }
 
     public static void addCountry(Country country) throws Exception {
+        try {
         Connection con = TestConnection.getConnection();
         String sql = "insert into `U03q1A`.`country` values (?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -134,11 +135,17 @@ public class CustomerDAO {
         ps.setString(4, country.getCreatedBy());
         ps.setTimestamp(5, new Timestamp(java.util.Date.from(country.getLastUpdate().atStartOfDay()
                 .atZone(ZoneId.systemDefault()).toInstant()).getTime()));
-        ps.setString(6, country.getLastUpdateBy());
+        ps.setString(6, country.getCreatedBy());
         ps.executeUpdate();
+        }
+        catch (Exception exc){
+            System.out.println("Bad sql in addCountry");
+            exc.printStackTrace();
+        }
     }
 
     public static void addCity(City city) throws Exception {
+        try {
         Connection con = TestConnection.getConnection();
         String sql = "insert into `U03q1A`.`city` values (?,?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -149,13 +156,17 @@ public class CustomerDAO {
         ps.setInt(3, city.getCountryId());
         ps.setDate(4, sqlDate);
         ps.setString(5, city.getCreatedBy());
-        ps.setTimestamp(6, new Timestamp(java.util.Date.from(city.getLastUpdate().atStartOfDay()
-                .atZone(ZoneId.systemDefault()).toInstant()).getTime()));
-        ps.setString(7, city.getLastUpdateBy());
+        ps.setTimestamp(6, new Timestamp(java.util.Date.from(city.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setString(7, city.getCreatedBy());
         ps.executeUpdate();
+        } catch (Exception exc){
+            System.out.println("Bad sql in addCity DAO");
+            exc.printStackTrace();
+        }
     }
 
     public static void addAddress(Address address) throws Exception {
+        try {
         Connection con = TestConnection.getConnection();
         String sql = "insert into `U03q1A`.`address` values (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -165,17 +176,20 @@ public class CustomerDAO {
         ps.setInt(4, address.getCityId());
         ps.setString(5, address.getPostalCode());
         ps.setString(6, address.getPhone());
-        Date sqlDate = new Date(address.getCreateDate().
-                atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        Date sqlDate = new Date(address.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(7, sqlDate);
         ps.setString(8, address.getCreatedBy());
-        ps.setTimestamp(9, new Timestamp(java.util.Date.from(address.getLastUpdate().atStartOfDay()
-                .atZone(ZoneId.systemDefault()).toInstant()).getTime()));
-        ps.setString(10, address.getLastUpdateBy());
+        ps.setTimestamp(9, new Timestamp(java.util.Date.from(address.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setString(10, address.getCreatedBy());
         ps.executeUpdate();
+        }catch (Exception exc){
+            System.out.println("Bad sql in addAddress");
+            exc.printStackTrace();
+    }
     }
 
     public static void addCustomer(Customer customer) throws Exception {
+        try {
         String sql = "insert into `U03q1A`.`customer` values (?,?,?,?,?,?,?,?)";
         boolean edit = false;
         for (Customer cust: getCustomerList()) {
@@ -199,13 +213,16 @@ public class CustomerDAO {
                 atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(5, sqlDate);
         ps.setString(6, customer.getCreatedBy());
-        ps.setTimestamp(7, new Timestamp(java.util.Date.from(customer.getLastUpdate().atStartOfDay()
-                .atZone(ZoneId.systemDefault()).toInstant()).getTime()));
-        ps.setString(8, customer.getLastUpdateBy());
+        ps.setTimestamp(7, new Timestamp(java.util.Date.from(customer.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setString(8, customer.getCreatedBy());
         if (edit) {
             ps.setInt(9, customer.getId());
         }
         ps.executeUpdate();
+        } catch (Exception exc){
+            System.out.println("Bad addCustomer SQL");
+            exc.printStackTrace();
+        }
     }
     
     public static void addReminder(Reminder reminder) throws Exception {
@@ -219,8 +236,7 @@ public class CustomerDAO {
         ps.setInt(4, reminder.getSnoozeIncrementTypeId());
         ps.setInt(5, reminder.getAppointmentId());
         ps.setString(6, reminder.getCreatedBy());
-        ps.setDate(7, new Date(reminder.getCreatedDate().
-                atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()));
+        ps.setDate(7, new Date(reminder.getCreatedDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()));
         ps.setString(8, "col");
         ps.executeUpdate();
     }
@@ -238,12 +254,10 @@ public class CustomerDAO {
         ps.setString(7, appointment.getUrl());
         ps.setTimestamp(8, Timestamp.valueOf(appointment.getStart()));
         ps.setTimestamp(9, Timestamp.valueOf(appointment.getEnd()));
-        Date sqlDate = new Date(appointment.getCreateDate().
-                atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        Date sqlDate = new Date(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(10, sqlDate);
         ps.setString(11, appointment.getCreatedBy());
-        ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getLastUpdate().atStartOfDay()
-                .atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getLastUpdate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(13, appointment.getLastUpdateBy());
         ps.executeUpdate();
     }

@@ -20,6 +20,7 @@ public class Address extends ScheduleItem {
     private String address2;
     
     private int cityId;
+    private static AtomicInteger nextId = new AtomicInteger(0);
     
     private String postalCode;
     
@@ -30,7 +31,7 @@ public class Address extends ScheduleItem {
         super(createDate, createdBy);
         this.address = address;
         this.address2 = address2;
-        this.cityId = super.getId();
+        this.cityId = nextId.incrementAndGet();
         this.postalCode = postalCode;
         this.phone = phone;
         

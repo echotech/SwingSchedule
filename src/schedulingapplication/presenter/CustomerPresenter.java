@@ -322,7 +322,7 @@ public class CustomerPresenter implements ActionListener {
             
 
             if (createdBy.length() == 0) {
-                throw new Exception("Enter created by!");
+                throw new Exception("Enter customer created by!");
             }
 
             String name = view.getPanel().getJtfCustName().getText().trim();
@@ -359,7 +359,7 @@ public class CustomerPresenter implements ActionListener {
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
             if (createdBy.length() == 0) {
-                throw new Exception("Enter created by!");
+                throw new Exception("Enter address created by!");
             }
 
             String addr1, postCode, phone;
@@ -384,7 +384,7 @@ public class CustomerPresenter implements ActionListener {
                     postCode,
                     phone);
             model.addAddress(address);
-            view.getPanel().clearFields();
+            //view.getPanel().clearFields();
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
@@ -405,7 +405,7 @@ public class CustomerPresenter implements ActionListener {
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
             if (createdBy.length() == 0) {
-                throw new Exception("Enter created by!");
+                throw new Exception("Enter country created by!");
             }
 
             String countryName = view.getPanel().getJcbCountry().getSelectedItem().toString();
@@ -418,7 +418,7 @@ public class CustomerPresenter implements ActionListener {
                     countryName);
             model.addCountry(country);
             //updateCountries();
-            view.getPanel().clearFields();
+            //view.getPanel().clearFields();
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
@@ -438,7 +438,7 @@ public class CustomerPresenter implements ActionListener {
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
             if (createdBy.length() == 0) {
-                throw new Exception("Enter created by!");
+                throw new Exception("Enter city created by!");
             }
 
             String cityName = view.getPanel().getJtfCity().getText().trim();
@@ -448,7 +448,7 @@ public class CustomerPresenter implements ActionListener {
             City city = new City(createDate, createdBy, cityName);
             model.addCity(city);
 
-            view.getPanel().clearFields();
+            //view.getPanel().clearFields();
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
