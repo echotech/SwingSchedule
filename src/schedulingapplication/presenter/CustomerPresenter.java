@@ -46,7 +46,7 @@ public class CustomerPresenter implements ActionListener {
     private static AtomicInteger nextAppId = new AtomicInteger(0);
 
     public void initView() {
-        //view.getPanel().getJbAddCountry().setActionCommand("addcountry");
+        //view.getPanel().getJcbAddCountries().setActionCommand("addcountry");
         //view.getPanel().getJbAddCity().setActionCommand("addcity");
         //view.getPanel().getJbAddAddress().setActionCommand("addaddress");
         view.getPanel().getJbAddCustomer().setActionCommand("addcustomer");
@@ -54,7 +54,7 @@ public class CustomerPresenter implements ActionListener {
         view.getPanel().getJbAddReminder().setActionCommand("addreminder");
         view.getPanel().getJbAddIncrement().setActionCommand("addincrement");
 
-        //updateCountries();
+        updateCountries();
         //updateCities();
         //updateAddresses();
         updateCustomers();
@@ -106,8 +106,8 @@ public class CustomerPresenter implements ActionListener {
     private void updateCountries() {
         try {
             //TODO update the list of countries so it has ids for all the countries
-            //List<Country> countries = model.getCountryList();
-            
+            List<Country> countries = model.getCountryList();
+            countries.forEach(c -> view.getPanel().getJcbCountries().addItem(c));
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
@@ -418,7 +418,7 @@ public class CustomerPresenter implements ActionListener {
                 throw new Exception("Enter country created by!");
             }
 
-            String countryName = view.getPanel().getJcbCountry().getSelectedItem().toString();
+            String countryName = view.getPanel().getJcbCountries().getSelectedItem().toString();
             if (countryName.length() == 0) {
                 throw new Exception("Enter country!");
             }
@@ -428,7 +428,7 @@ public class CustomerPresenter implements ActionListener {
                     countryName);
             model.addCountry(country);
             
-            view.getPanel().clearFields();
+           //view.getPanel().clearFields();
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
@@ -457,8 +457,8 @@ public class CustomerPresenter implements ActionListener {
             }
             
             //TODO fix this logic so it actually gets proper countryId, not something random.
-            int countryId = model.getId();
-            City city = new City(createDate, createdBy, cityName, countryId);
+            
+            City city = new City(createDate, createdBy, cityName, ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
             model.addCity(city);
 
             //view.getPanel().clearFields();
