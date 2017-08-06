@@ -45,6 +45,29 @@ public class CustomerDAO {
         }
         return list; 
     }
+    
+    public static int getCountryId(String country) throws Exception {
+        //SQL Stuff
+            Connection con = TestConnection.getConnection();
+            String sql ="select countryId from `U03q1A`.`country` where country ="+"'"+country+"';";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            return rs.getInt(1);
+        
+    }
+    
+        public static int getCityId(String city) throws Exception {
+        
+            //SQL Stuff
+            Connection con = TestConnection.getConnection();
+            String sql ="select cityId from `U03q1A`.`city` where city like"+"'%"+city+"%';";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            return rs.getInt(1);
+        
+    }
 
     public static List<Address> getAddressList() throws Exception {
         List<Address> list = new ArrayList<>();

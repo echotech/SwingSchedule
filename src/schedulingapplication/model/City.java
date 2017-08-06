@@ -8,7 +8,9 @@ package schedulingapplication.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import schedulingapplication.dao.CustomerDAO;
 
 /**
  *
@@ -51,6 +53,10 @@ public class City extends ScheduleItem {
     @Override
     public String toString() {
         return city;
+    }
+    
+    public int getCountryId(String country) throws Exception {
+        return CustomerDAO.getCountryId(country);
     }
     
 }

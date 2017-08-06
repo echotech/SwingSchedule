@@ -20,8 +20,7 @@ public class Address extends ScheduleItem {
     private String address2;
     
     private int cityId;
-    private static AtomicInteger nextId = new AtomicInteger(0);
-    
+        
     private String postalCode;
     
     private String phone;

@@ -16,6 +16,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import schedulingapplication.dao.CustomerDAO;
 import schedulingapplication.model.Address;
 import schedulingapplication.model.Appointment;
 import schedulingapplication.model.City;
@@ -374,7 +375,8 @@ public class CustomerPresenter implements ActionListener {
             addr1 = view.getPanel().getJtfAddress1().getText().trim();
             postCode = view.getPanel().getJtfPostalCode().getText().trim();
             phone = view.getPanel().getJtfPhone().getText().trim();
-            int cityId = model.getId();
+            String city = view.getPanel().getJtfCity().getText().trim();
+            int cityId = CustomerDAO.getCityId(city);
             if (addr1.length() == 0) {
                 throw new Exception("Enter address1!");
             }
@@ -455,10 +457,11 @@ public class CustomerPresenter implements ActionListener {
             if (cityName.length() == 0) {
                 throw new Exception("Enter city!");
             }
+            String country = view.getPanel().getJcbCountries().getSelectedItem().toString();
             
             //TODO fix this logic so it actually gets proper countryId, not something random.
             
-            City city = new City(createDate, createdBy, cityName, ((Country) view.getPanel().getJcbCountries().getSelectedItem()).getId());
+            City city = new City(createDate, createdBy, cityName, CustomerDAO.getCountryId(country));
             model.addCity(city);
 
             //view.getPanel().clearFields();
