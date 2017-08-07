@@ -47,25 +47,31 @@ public class CustomerDAO {
     }
     
     public static int getCountryId(String country) throws Exception {
-        //SQL Stuff
+            int id =0;
+            //SQL Stuff
             Connection con = TestConnection.getConnection();
             String sql ="select countryId from `U03q1A`.`country` where country ="+"'"+country+"';";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             
-            return rs.getInt(1);
-        
+            while (rs.next()){
+                id = rs.getInt(1);
+            }
+            return id;      
     }
     
         public static int getCityId(String city) throws Exception {
-        
+            int id=0;
             //SQL Stuff
             Connection con = TestConnection.getConnection();
             String sql ="select cityId from `U03q1A`.`city` where city like"+"'%"+city+"%';";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                id = rs.getInt(1);
+            }
+            return id;
             
-            return rs.getInt(1);
         
     }
 
@@ -156,8 +162,7 @@ public class CustomerDAO {
                 atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(3, sqlDate);
         ps.setString(4, country.getCreatedBy());
-        ps.setTimestamp(5, new Timestamp(java.util.Date.from(country.getLastUpdate().atStartOfDay()
-                .atZone(ZoneId.systemDefault()).toInstant()).getTime()));
+        ps.setTimestamp(5, new Timestamp(java.util.Date.from(country.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(6, country.getCreatedBy());
         ps.executeUpdate();
         }
