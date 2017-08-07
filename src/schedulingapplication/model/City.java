@@ -18,8 +18,7 @@ import schedulingapplication.dao.CustomerDAO;
 public class City extends ScheduleItem {
     
     private String city;
-    private static AtomicInteger nextId = new AtomicInteger(0);
-    
+       
     private int countryId;
     
     public City( LocalDateTime createDate, String createdBy, 
@@ -27,7 +26,7 @@ public class City extends ScheduleItem {
         super(createDate, createdBy);
         this.city = city;
         this.countryId = countryId;
-        //super.setId(nextId.incrementAndGet());
+        
     }
     
     public City() {

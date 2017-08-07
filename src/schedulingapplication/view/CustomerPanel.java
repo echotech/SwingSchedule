@@ -19,7 +19,7 @@ import schedulingapplication.model.Incrementtypes;
 
 /**
  *
- * @author Sasha
+ * @author Jed
  */
 public class CustomerPanel extends javax.swing.JPanel {
 

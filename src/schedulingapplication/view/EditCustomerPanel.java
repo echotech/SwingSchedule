@@ -6,6 +6,7 @@
 package schedulingapplication.view;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import schedulingapplication.dao.TestConnection;
 
@@ -30,28 +32,24 @@ public class EditCustomerPanel extends JFrame{
     public EditCustomerPanel(String title) {
         super(title);
         try{
-        initComponents();}
-        catch (Exception e){
-            System.out.println("You broke edit customer.");
+        initComponents();
+        
+        }catch (Exception e){
+            System.out.println(e);
+            e.printStackTrace();
         }
-        setLocationRelativeTo(null);
+        
+        
     }
 
-    public void initComponents() throws Exception{
+    private void initComponents() throws Exception{
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);      
         
-               
-        Connection con = TestConnection.getConnection();
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName, a.address, a.address2, a.phone, a.postalCode, ci.city\n" +
-        "from customer c\n" +
-        "join address a on c.addressId=a.addressId\n" +
-        "join city ci on a.cityId=ci.cityId;");
-        JTable table = new JTable(buildTableModel(rs));
-        JOptionPane.showMessageDialog(null, new JScrollPane(table));
     }
     
-    //TODO move this to EditCustomerPanel using this https://stackoverflow.com/questions/27271234/how-can-i-open-a-jpanel-from-a-menu
-    
+      
     public static DefaultTableModel buildTableModel(ResultSet rs)
         throws SQLException {
 
@@ -78,8 +76,7 @@ public class EditCustomerPanel extends JFrame{
 
 }
     
-    public void editCustomer(){
-        
+    public static void main(String[] args) throws Exception{
         try {
             Connection con = TestConnection.getConnection();
             Statement stmt = con.createStatement();
@@ -91,8 +88,9 @@ public class EditCustomerPanel extends JFrame{
             JOptionPane.showMessageDialog(null, new JScrollPane(table));
         }
         catch (Exception e){
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
     }
     
 }
