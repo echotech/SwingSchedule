@@ -299,12 +299,7 @@ public class CustomerPresenter implements ActionListener {
     }
 
     public void addCustomer() {
-        try {
-            addCountry();
-        }
-        catch (Exception exc){
-            System.out.println("You did something wrong in CustomerPresenter.addCountry");
-        }
+        
         try {
             addCity();
         } catch (Exception exc) {
