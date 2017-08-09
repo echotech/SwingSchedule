@@ -106,7 +106,7 @@ public class CustomerPresenter implements ActionListener {
 
     private void updateCountries() {
         try {
-            //TODO update the list of countries so it has ids for all the countries
+            
             List<Country> countries = model.getCountryList();
             countries.forEach(c -> view.getPanel().getJcbCountries().addItem(c));
         } catch (Exception exc) {
@@ -314,7 +314,7 @@ public class CustomerPresenter implements ActionListener {
 
             LocalDateTime createDate;
             String createdBy;
-
+            int custId = CustomerDAO.getNextId("customer");
             //Old way manually setting date time.
             //createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
             createDate = LocalDateTime.now();
@@ -333,6 +333,7 @@ public class CustomerPresenter implements ActionListener {
             }
           
             Customer customer = new Customer(
+                    custId,
                     createDate,
                     createdBy,
                     name,

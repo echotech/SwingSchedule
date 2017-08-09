@@ -46,6 +46,20 @@ public class CustomerDAO {
         return list; 
     }
     
+    public static int getNextId(String type) throws Exception {
+            int id =0;
+            //SQL Stuff
+            Connection con = TestConnection.getConnection();
+            String sql ="select MAX("+type+"Id) from `U03q1A`.`"+type+"`;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()){
+                id = rs.getInt(1);
+            }
+            return id;      
+    }
+    
     public static int getCountryId(String country) throws Exception {
             int id =0;
             //SQL Stuff

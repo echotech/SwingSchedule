@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public abstract class ScheduleItem {
 
     private int id;
-    private static AtomicInteger nextId = new AtomicInteger(0);
+    
     private LocalDateTime createDate;
 
     private String createdBy;
@@ -26,7 +26,7 @@ public abstract class ScheduleItem {
     private String lastUpdateBy;
 
     public ScheduleItem (LocalDateTime createDate, String createdBy) {
-        this.id = nextId.incrementAndGet();
+        
         this.createDate = createDate;
         this.createdBy = createdBy;
         

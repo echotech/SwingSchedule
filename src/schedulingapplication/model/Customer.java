@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 import schedulingapplication.dao.CustomerDAO;
 
@@ -19,8 +19,7 @@ import schedulingapplication.dao.CustomerDAO;
 public class Customer extends ScheduleItem {
 
     private String name;
-    private static AtomicInteger nextId = new AtomicInteger(0);
-   
+       
     private boolean active;
 
     private int addressId;
@@ -30,8 +29,7 @@ public class Customer extends ScheduleItem {
         super(createDate, createdBy);
         this.name = name;
         this.active = active;
-        this.addressId = nextId.incrementAndGet();
-        
+               
     }
 
     public Customer() {

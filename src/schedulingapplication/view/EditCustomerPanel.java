@@ -89,7 +89,7 @@ public class EditCustomerPanel extends JFrame {
 
     public static void main(String[] args) throws Exception {
         SwingUtilities.invokeLater(() -> {
-            new WeeklyScheduleView(("Weekly View")).setVisible(true);
+            new EditCustomerPanel(("Edit Customers")).setVisible(true);
         });
 
     }

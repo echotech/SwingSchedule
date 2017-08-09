@@ -16,12 +16,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Country extends ScheduleItem {
     
     private String country;
-    private static AtomicInteger nextId = new AtomicInteger(0);
+    
     
     public Country(LocalDateTime createDate, String createdBy, String country) {
         super(createDate, createdBy);
         this.country = country;
-        //super.setId(nextId.incrementAndGet());
+        
     }
     
     public Country() {
