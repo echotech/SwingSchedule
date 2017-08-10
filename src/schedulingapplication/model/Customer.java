@@ -24,9 +24,10 @@ public class Customer extends ScheduleItem {
 
     private int addressId;
 
-    public Customer(LocalDateTime createDate, String createdBy,
+    public Customer(int addressId,LocalDateTime createDate, String createdBy,
            String name, boolean active) {
         super(createDate, createdBy);
+        this.addressId=addressId;
         this.name = name;
         this.active = active;
                

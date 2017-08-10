@@ -46,11 +46,11 @@ public class CustomerDAO {
         return list; 
     }
     
-    public static int getNextId(String type) throws Exception {
+    public static int getAddressId(String address) throws Exception {
             int id =0;
             //SQL Stuff
             Connection con = TestConnection.getConnection();
-            String sql ="select MAX("+type+"Id) from `U03q1A`.`"+type+"`;";
+            String sql ="select addressId from `U03q1A`.`address` where address ="+"'"+address+"';";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             

@@ -311,10 +311,12 @@ public class CustomerPresenter implements ActionListener {
             System.out.println("You can't call addAddress that way!");
         }
         try {
+            String address1=view.getPanel().getJtfAddress1().getText().trim();
+            int addressId = CustomerDAO.getAddressId(address1);
 
             LocalDateTime createDate;
             String createdBy;
-            int custId = CustomerDAO.getNextId("customer");
+            
             //Old way manually setting date time.
             //createDate = LocalDateTime.ofInstant(view.getPanel().getDpCreateDate().getDate().toInstant(), ZoneId.systemDefault());
             createDate = LocalDateTime.now();
@@ -333,7 +335,7 @@ public class CustomerPresenter implements ActionListener {
             }
           
             Customer customer = new Customer(
-                    custId,
+                    addressId,
                     createDate,
                     createdBy,
                     name,
@@ -455,8 +457,7 @@ public class CustomerPresenter implements ActionListener {
             }
             String country = view.getPanel().getJcbCountries().getSelectedItem().toString();
             
-            //TODO fix this logic so it actually gets proper countryId, not something random.
-            
+                    
             City city = new City(createDate, createdBy, cityName, CustomerDAO.getCountryId(country));
             model.addCity(city);
 
