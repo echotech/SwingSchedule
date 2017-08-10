@@ -342,6 +342,7 @@ public class CustomerPresenter implements ActionListener {
                     view.getPanel().getJchbActive().isSelected());
             model.addCustomer(customer);
             view.getPanel().clearFields();
+            updateCustomers();
             view.revalidate();
             view.repaint();
 
