@@ -5,6 +5,8 @@
  */
 package schedulingapplication.view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +27,7 @@ import schedulingapplication.dao.TestConnection;
  * @author jreisner
  */
 public class EditCustomerPanel extends JFrame {
+    private JTable jtable;
 
     /**
      * Creates new form CustomerForm
@@ -54,7 +57,23 @@ public class EditCustomerPanel extends JFrame {
                     + "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
             JTable table = new JTable(buildTableModel(rs));
             JOptionPane.showMessageDialog(null, new JScrollPane(table));
-
+            this.jtable=table;
+            //TODO Implement me https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+            table.getModel().addTableModelListener(table);
+                
+                    int row=table.getSelectedRow();
+                    int col=table.getSelectedColumn();
+                    String sql = null;
+                    try {
+                        if (col==1){
+                            sql = "Update `U03q1a`.`customer` set customerName='"+row+"' where customerId=";
+                        }
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                
+                
+                    
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -86,7 +105,8 @@ public class EditCustomerPanel extends JFrame {
         return new DefaultTableModel(data, columnNames);
 
     }
-
+    
+    
     public static void main(String[] args) throws Exception {
         SwingUtilities.invokeLater(() -> {
             new EditCustomerPanel(("Edit Customers")).setVisible(true);
