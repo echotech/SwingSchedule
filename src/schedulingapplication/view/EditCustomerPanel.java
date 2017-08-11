@@ -27,6 +27,7 @@ import schedulingapplication.dao.TestConnection;
  * @author jreisner
  */
 public class EditCustomerPanel extends JFrame {
+
     private JTable jtable;
 
     /**
@@ -57,23 +58,53 @@ public class EditCustomerPanel extends JFrame {
                     + "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
             JTable table = new JTable(buildTableModel(rs));
             JOptionPane.showMessageDialog(null, new JScrollPane(table));
-            this.jtable=table;
-            //TODO Implement me https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
+            this.jtable = table;
+            //TODO Implement me https://stackoverflow.com/questions/33584969/update-database-on-jtable-cell-change
             table.getModel().addTableModelListener(table);
-                
-                    int row=table.getSelectedRow();
-                    int col=table.getSelectedColumn();
-                    String sql = null;
-                    try {
-                        if (col==1){
-                            sql = "Update `U03q1a`.`customer` set customerName='"+row+"' where customerId=";
-                        }
-                    } catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                
-                
+
+            int row = table.getSelectedRow();
+            int col = table.getSelectedColumn();
+            String sql = null;
+            String city = table.getValueAt(row, 6).toString();
+            try {
+                if (col == 1) {
+                    sql = "Update `U03q1A`.`customer` set `customerName`=? where `customerId`=?" ;
                     
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, table.getValueAt(row,col).toString());
+                    ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
+                    ps.executeUpdate();
+
+                }
+                else if (col == 2) {
+                    sql = "Update `U03q1A`.`address` set address='" + table.getValueAt(row, col).toString() + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.execute();
+                }
+                else if (col == 3) {
+                    sql = "Update `U03q1A`.`address` set address2='" + row + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.execute();
+                }
+                else if (col == 4) {
+                    sql = "Update `U03q1A`.`address` set phone='" + row + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.execute();
+                }
+                else if (col == 5) {
+                    sql = "Update `U03q1A`.`address` set postalCode='" + row + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.execute();
+                }
+                else if (col == 4) {
+                    sql = "Update `U03q1A`.`city` set city='" + row + "' where cityId=(select cityID from `U03q1A`.`city` where city=" + city + ";";
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.execute();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -105,8 +136,7 @@ public class EditCustomerPanel extends JFrame {
         return new DefaultTableModel(data, columnNames);
 
     }
-    
-    
+
     public static void main(String[] args) throws Exception {
         SwingUtilities.invokeLater(() -> {
             new EditCustomerPanel(("Edit Customers")).setVisible(true);
