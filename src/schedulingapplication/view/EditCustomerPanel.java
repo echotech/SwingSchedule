@@ -7,6 +7,8 @@ package schedulingapplication.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +21,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import schedulingapplication.dao.TestConnection;
 
 /**
@@ -57,16 +62,19 @@ public class EditCustomerPanel extends JFrame {
                     + "join `U03q1A`.`address` a on c.addressId=a.addressId\n"
                     + "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
             JTable table = new JTable(buildTableModel(rs));
+            
             JOptionPane.showMessageDialog(null, new JScrollPane(table));
             this.jtable = table;
-            //TODO Implement me https://stackoverflow.com/questions/33584969/update-database-on-jtable-cell-change
-            table.getModel().addTableModelListener(table);
-
-            int row = table.getSelectedRow();
-            int col = table.getSelectedColumn();
-            String sql = null;
             
-            try {
+            table.getModel().addTableModelListener(table);
+            table.putClientProperty("terminateEditOnFocusLost", true);
+        
+        int row = table.getSelectedRow();
+            int col = table.getSelectedColumn();
+            String sql = null;    
+            
+        try {
+            
                 if (col == 1) {
                     sql = "Update `U03q1A`.`customer` set `customerName`=? where `customerId`=?" ;
                     
@@ -114,12 +122,16 @@ public class EditCustomerPanel extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
-        } catch (Exception e) {
+            
+           
+                
+            } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
+    
+    
 
     public static DefaultTableModel buildTableModel(ResultSet rs)
             throws SQLException {
