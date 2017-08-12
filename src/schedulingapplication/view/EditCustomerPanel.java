@@ -65,7 +65,7 @@ public class EditCustomerPanel extends JFrame {
             int row = table.getSelectedRow();
             int col = table.getSelectedColumn();
             String sql = null;
-            String city = table.getValueAt(row, 6).toString();
+            
             try {
                 if (col == 1) {
                     sql = "Update `U03q1A`.`customer` set `customerName`=? where `customerId`=?" ;
@@ -76,29 +76,39 @@ public class EditCustomerPanel extends JFrame {
                     ps.executeUpdate();
 
                 }
-                else if (col == 2) {
-                    sql = "Update `U03q1A`.`address` set address='" + table.getValueAt(row, col).toString() + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                if (col == 2) {
+                    sql = "Update `U03q1A`.`address` set `address`=? where `addressId`=(select `addressId` from `U03q1A`.`customer` where `customerId`=?)";
                     PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, table.getValueAt(row,col).toString());
+                    ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                     ps.execute();
                 }
-                else if (col == 3) {
-                    sql = "Update `U03q1A`.`address` set address2='" + row + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                if (col == 3) {
+                    sql = "Update `U03q1A`.`address` set `address2`=? where `addressId`=(select `addressId` from `U03q1A`.`customer` where `customerId`=?)";
                     PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, table.getValueAt(row,col).toString());
+                    ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                     ps.execute();
                 }
-                else if (col == 4) {
-                    sql = "Update `U03q1A`.`address` set phone='" + row + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                if (col == 4) {
+                    sql = "Update `U03q1A`.`address` set `phone`=? where `addressId`=(select `addressId` from `U03q1A`.`customer` where `customerId`=?)";
                     PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, table.getValueAt(row,col).toString());
+                    ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                     ps.execute();
                 }
-                else if (col == 5) {
-                    sql = "Update `U03q1A`.`address` set postalCode='" + row + "' where addressId=(select addressId from `U03q1A`.`customer` where customerId=" + table.getValueAt(row, 0) + ";";
+                if (col == 5) {
+                    sql = "Update `U03q1A`.`address` set `postalCode`=? where `addressId`=(select `addressId` from `U03q1A`.`customer` where `customerId`=?)";
                     PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, table.getValueAt(row,col).toString());
+                    ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                     ps.execute();
                 }
-                else if (col == 4) {
-                    sql = "Update `U03q1A`.`city` set city='" + row + "' where cityId=(select cityID from `U03q1A`.`city` where city=" + city + ";";
+                if (col == 6) {
+                    sql = "Update `U03q1A`.`city` set `city`=? where `cityId`=(select `cityID` from `U03q1A`.`address` where `addressId`=(select `addressId` from `U03q1A`.`customer` where `customerId`=?))";
                     PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, table.getValueAt(row,col).toString());
+                    ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                     ps.execute();
                 }
             } catch (Exception ex) {
