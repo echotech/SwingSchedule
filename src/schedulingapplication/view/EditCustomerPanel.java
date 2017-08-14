@@ -78,8 +78,11 @@ public class EditCustomerPanel extends JFrame {
 
     //http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#modelchange
     public void updateTable() {
+        Connection con = TestConnection.getConnection();
+        Statement stmt = con.createStatement();
         int row = this.jtable.getSelectedRow();
         int col = this.jtable.getSelectedColumn();
+        JTable table = this.jtable;
         String sql = null;
 
         try {
