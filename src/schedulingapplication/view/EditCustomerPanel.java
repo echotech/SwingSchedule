@@ -77,7 +77,7 @@ public class EditCustomerPanel extends JFrame {
     }
 
     //http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#modelchange
-    public void updateTable() {
+    public void updateTable() throws Exception{
         Connection con = TestConnection.getConnection();
         Statement stmt = con.createStatement();
         int row = this.jtable.getSelectedRow();
