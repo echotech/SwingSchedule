@@ -42,6 +42,7 @@ public class EditCustomerPanel extends JFrame {
         super(title);
         try {
             initComponents();
+            
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             pack();
             setLocationRelativeTo(null);
@@ -160,6 +161,7 @@ public class EditCustomerPanel extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
+        
         SwingUtilities.invokeLater(() -> {
             new EditCustomerPanel(("Edit Customers")).setVisible(true);
         });
