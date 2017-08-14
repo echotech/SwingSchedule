@@ -5,10 +5,6 @@
  */
 package schedulingapplication.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,13 +15,13 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableModel;
+import schedulingapplication.dao.TestConnection;
+
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import schedulingapplication.dao.TestConnection;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -50,6 +46,7 @@ public class EditCustomerPanel extends JFrame {
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
+            System.out.println("Something broke in constructor.");
         }
 
     }
@@ -65,27 +62,31 @@ public class EditCustomerPanel extends JFrame {
             JTable table = new JTable(buildTableModel(rs));
 
             JOptionPane.showMessageDialog(null, new JScrollPane(table));
-            this.jtable = table;
-
-            table.getModel().addTableModelListener(table);
             table.putClientProperty("terminateEditOnFocusLost", true);
 
+            this.jtable = table;
+            this.jtable.getModel().addTableModelListener(this.jtable);
+            
+            
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Initcomponents broke.");
         }
 
     }
 
     //http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#modelchange
-    public void updateTable() throws Exception{
+    public void updateTable(TableModelEvent e) throws Exception {
+        try {
         Connection con = TestConnection.getConnection();
-        Statement stmt = con.createStatement();
-        int row = this.jtable.getSelectedRow();
-        int col = this.jtable.getSelectedColumn();
         JTable table = this.jtable;
+
+        int row = e.getFirstRow();
+        int col = e.getColumn();
+        
         String sql = null;
 
-        try {
+        
 
             if (col == 1) {
                 sql = "Update `U03q1A`.`customer` set `customerName`=? where `customerId`=?";
@@ -94,6 +95,7 @@ public class EditCustomerPanel extends JFrame {
                 ps.setString(1, table.getValueAt(row, col).toString());
                 ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                 ps.executeUpdate();
+                System.out.println("Updated customer name");
 
             }
             if (col == 2) {
@@ -133,6 +135,7 @@ public class EditCustomerPanel extends JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+            System.out.println("Updates aren't working");
         }
     }
 
