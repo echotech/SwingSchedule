@@ -70,8 +70,20 @@ public class EditCustomerPanel extends JFrame {
             table.getModel().addTableModelListener(table);
             table.putClientProperty("terminateEditOnFocusLost", true);
         
-        int row = table.getSelectedRow();
-            int col = table.getSelectedColumn();
+        
+        
+            
+           
+                
+            } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+    //http://docs.oracle.com/javase/tutorial/uiswing/components/table.html#modelchange
+    public void updateTable(){
+        int row = this.jtable.getSelectedRow();
+            int col = this.jtable.getSelectedColumn();
             String sql = null;    
             
         try {
@@ -123,13 +135,6 @@ public class EditCustomerPanel extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            
-           
-                
-            } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
     }
     
     
