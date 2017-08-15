@@ -83,6 +83,7 @@ public class CustomerPanel extends javax.swing.JPanel {
         jbAddAppointment = new javax.swing.JButton();
         startTimeApp = new javax.swing.JSpinner( new SpinnerDateModel() );
         endTimeApp = new javax.swing.JSpinner(new SpinnerDateModel());
+        jbRefreshCust = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         dpEnterRemDate = new org.jdesktop.swingx.JXDatePicker();
@@ -321,6 +322,13 @@ public class CustomerPanel extends javax.swing.JPanel {
         endTimeApp.setEditor(timeEditor2);
         endTimeApp.setValue(new Date()); // will only show the current time
 
+        jbRefreshCust.setText("Refresh Customers");
+        jbRefreshCust.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRefreshCustActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -357,11 +365,16 @@ public class CustomerPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(startTimeApp, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbRefreshCust)
+                .addGap(92, 92, 92))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addComponent(jbRefreshCust)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -398,7 +411,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                         .addComponent(jLabel23)
                         .addComponent(endTimeApp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addComponent(jbAddAppointment)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Reminder"));
@@ -525,7 +538,7 @@ public class CustomerPanel extends javax.swing.JPanel {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -576,6 +589,10 @@ public class CustomerPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCreatedByActionPerformed
 
+    private void jbRefreshCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshCustActionPerformed
+        // TODO add your handling code here:              
+    }//GEN-LAST:event_jbRefreshCustActionPerformed
+
     public void displayError(Exception exc) {
          JOptionPane.showMessageDialog(this, exc.getMessage(), "Exception occurred",
                 JOptionPane.ERROR_MESSAGE);
@@ -622,6 +639,7 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JButton jbAddCustomer;
     private javax.swing.JButton jbAddIncrement;
     private javax.swing.JButton jbAddReminder;
+    private javax.swing.JButton jbRefreshCust;
     private javax.swing.JComboBox<Appointment> jcbAppointments;
     private javax.swing.JComboBox<Country> jcbCountries;
     private javax.swing.JComboBox<Customer> jcbCustomers;
@@ -721,6 +739,10 @@ public class CustomerPanel extends javax.swing.JPanel {
 
     public javax.swing.JTextField getJtfCustName() {
         return jtfCustName;
+    }
+    
+    public javax.swing.JButton getJbRefreshCust(){
+        return jbRefreshCust;
     }
 
    

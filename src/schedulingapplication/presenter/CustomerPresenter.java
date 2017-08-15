@@ -33,6 +33,11 @@ import schedulingapplication.view.CustomerFrame;
 public class CustomerPresenter implements ActionListener {
 
     private Customer model;
+    
+    public Customer getModel(){
+        return this.model;
+    }
+    
 
     private CustomerFrame view;
 
@@ -54,6 +59,7 @@ public class CustomerPresenter implements ActionListener {
         view.getPanel().getJbAddAppointment().setActionCommand("addappointment");
         view.getPanel().getJbAddReminder().setActionCommand("addreminder");
         view.getPanel().getJbAddIncrement().setActionCommand("addincrement");
+        view.getPanel().getJbRefreshCust().setActionCommand("refreshcust");
 
         updateCountries();
         //updateCities();
@@ -84,7 +90,7 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-    private void updateCustomers() {
+    public void updateCustomers() {
         try {
             view.getPanel().getJcbCustomers().removeAllItems();
             List<Customer> customers = model.getCustomerList();
@@ -122,6 +128,7 @@ public class CustomerPresenter implements ActionListener {
         view.getPanel().getJbAddAppointment().addActionListener(this);
         view.getPanel().getJbAddReminder().addActionListener(this);
         view.getPanel().getJbAddIncrement().addActionListener(this);
+        view.getPanel().getJbRefreshCust().addActionListener(this);
     }
 
     @Override
@@ -147,6 +154,9 @@ public class CustomerPresenter implements ActionListener {
                 break;
             case "addincrement":
                 addIncrement();
+                break;
+            case "refreshcust":
+                updateCustomers();
                 break;
         }
     }

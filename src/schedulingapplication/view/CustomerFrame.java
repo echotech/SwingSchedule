@@ -87,8 +87,10 @@ public class CustomerFrame extends JFrame {
     
     private void editCustomer(){
         SwingUtilities.invokeLater(()->{
-            new EditCustomerPanel(("Edit Customers")).setVisible(true);
+            new EditCustomerPanel("Edit Customers");
         });
+        
+        
     }
 
     private void monthlyView() {
