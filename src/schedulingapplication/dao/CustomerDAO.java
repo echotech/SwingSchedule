@@ -298,9 +298,10 @@ public class CustomerDAO {
         ps.setTimestamp(9, Timestamp.valueOf(appointment.getEnd()));
         Date sqlDate = new Date(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(10, sqlDate);
-        ps.setString(11, appointment.getCreatedBy());
+        //TODO Fixme
+        ps.setString(11, "demo");
         ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
-        ps.setString(13, appointment.getLastUpdateBy());
+        ps.setString(13, "demo");
         ps.executeUpdate();
     }
     
