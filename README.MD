@@ -6,7 +6,8 @@ How to use Jed's Scheduling App
 
 
 - [Usage](#usage)
-- [Languages](#language support)
+- [Languages](#language-support)
+- [Reports](#reports)
 - [Support](#support)
 - [Contributing](#contributing)
 
