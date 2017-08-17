@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
@@ -18,12 +19,17 @@ import schedulingapplication.model.LanguageModel;
  *
  */
 public class UserPanel extends javax.swing.JPanel {
+    
+    public Locale locale= Locale.getDefault();
 
     /**
      * Creates new form LoginPanel
      */
     public UserPanel() {
         initComponents();
+        jcbLanguage.setVisible(false);
+        jlSelectLanguage.setVisible(false);
+        System.out.println(locale.getDisplayLanguage());
     }
 
     /**
@@ -91,14 +97,13 @@ public class UserPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jlSuccessFailed, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jbLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbCancel))
-                        .addComponent(jtfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                        .addComponent(jpf)
-                        .addComponent(jcbLanguage, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbCancel))
+                    .addComponent(jtfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                    .addComponent(jpf)
+                    .addComponent(jcbLanguage, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(89, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -185,13 +190,13 @@ public class UserPanel extends javax.swing.JPanel {
     }
 
     public void setLanguage(String language) {
-        if (language.equals("English")) {
+        if (locale.getLanguage().equals("English")) {
             jlSelectLanguage.setText(LanguageModel.selectLanguageEnglish);
             jlLogin.setText(LanguageModel.loginEnglish);
             jlPassword.setText(LanguageModel.passwordEnglish);
             jbLogin.setText(LanguageModel.loginBtnEnglish);
             jbCancel.setText(LanguageModel.cancelEnglish);
-        } else if (language.equals("Spanish")) {
+        } else if (locale.getLanguage().equals("Spanish")) {
             jlSelectLanguage.setText(LanguageModel.selectLanguageSpanish);
             jlLogin.setText(LanguageModel.loginBtnSpanish);
             jlPassword.setText(LanguageModel.passwordSpanish);
@@ -204,15 +209,16 @@ public class UserPanel extends javax.swing.JPanel {
             jbLogin.setText(LanguageModel.loginBtnFrench);
             jbCancel.setText(LanguageModel.cancelFrench);
         }
+        
     }
 
     public void applyTimer(boolean success, String language) throws InterruptedException {
         
         if (success) {
             jlSuccessFailed.setForeground(Color.GREEN);
-            if (language.equals("English")) {
+            if (locale.getLanguage().equals("English")) {
                 jlSuccessFailed.setText(LanguageModel.successEnglish);
-            } else if (language.equals("Spanish")) {
+            } else if (locale.getLanguage().equals("Spanish")) {
                 jlSuccessFailed.setText(LanguageModel.successSpanish);
             } else {
                 jlSuccessFailed.setText(LanguageModel.successFrench);

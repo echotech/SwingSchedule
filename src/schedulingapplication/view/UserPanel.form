@@ -26,16 +26,14 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jlSuccessFailed" pref="164" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jbLogin" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jbCancel" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jtfLogin" pref="164" max="32767" attributes="0"/>
-                      <Component id="jpf" max="32767" attributes="0"/>
-                      <Component id="jcbLanguage" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jbLogin" min="-2" pref="70" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jbCancel" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jtfLogin" pref="164" max="32767" attributes="0"/>
+                  <Component id="jpf" max="32767" attributes="0"/>
+                  <Component id="jcbLanguage" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="89" max="32767" attributes="0"/>
           </Group>

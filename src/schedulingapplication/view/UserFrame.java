@@ -23,6 +23,8 @@ public class UserFrame extends JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+    
+   
 
     public UserPanel getPanel() {
         return panel;
