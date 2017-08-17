@@ -56,6 +56,21 @@ English, Spanish, French
 be displayed in those languages. If you have another language set, it will
 default to French.
 
+To change your locale:
+1. View the System Locale settings for Windows
+2. Click Start, then Control Panel
+3. Click Clock, Language and Region
+Windows 10, Windows 8: Click Region 
+Windows 7: Click Region and Language
+Windows XP: Click Regional and Language Options 
+The Region and Language options dialog appears.
+4. Click the Administrative tab
+On Windows XP, click the Advanced tab 
+If there is no Advanced tab, then you are not logged in with administrative privileges.
+5. Under the Language for non-Unicode programs section, click Change system locale and select the desired language.
+6. Click OK
+7. Restart the computer to apply the change.
+
 
 ## Support
 
