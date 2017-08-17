@@ -52,11 +52,11 @@ Schedule:
 
 ## Language support
 
-English, Spanish, French
--To set the language, change your locale settings in your operating system.
--If your language is set to English, Spanish, or French the error messages will
-be displayed in those languages. If you have another language set, it will
-default to French.
+**English, Spanish, French**
+- To set the language, change your locale settings in your operating system.
+- If your language is set to English, Spanish, or French the error messages will
+be displayed in those languages. **If you have another language set, it will
+default to French.**
 
 To change your locale:
 1. View the System Locale settings for Windows
