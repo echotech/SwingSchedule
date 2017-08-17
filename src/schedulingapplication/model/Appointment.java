@@ -113,9 +113,8 @@ public class Appointment extends ScheduleItem {
     }
     
     public String display() {
-        return "Id: " + getId() + "<br>Title: " + title + "<br>Description: " +
-                description + "<br>Location: " + location + "<br>Contact: " +
-                contact + "<br>URL: " + url + "<br>Start: " + start +
+        return "Id: " + getId() + "<br>Title: " + title +  "<br>Location: " + location + "<br>Contact: " +
+                contact + "<br>Start: " + start +
                 "<br>End: " + end + "";
     }
     
