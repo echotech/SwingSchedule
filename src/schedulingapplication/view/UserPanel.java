@@ -20,16 +20,18 @@ import schedulingapplication.model.LanguageModel;
  */
 public class UserPanel extends javax.swing.JPanel {
     
-    public Locale locale= Locale.getDefault();
-
+    
     /**
      * Creates new form LoginPanel
      */
     public UserPanel() {
+        
         initComponents();
+        setLanguage();
         jcbLanguage.setVisible(false);
         jlSelectLanguage.setVisible(false);
-        System.out.println(locale.getDisplayLanguage());
+        
+        System.out.println(schedulingapplication.Main.getLocale());
     }
 
     /**
@@ -189,14 +191,14 @@ public class UserPanel extends javax.swing.JPanel {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    public void setLanguage(String language) {
-        if (locale.getLanguage().equals("English")) {
+    public void setLanguage() {
+        if (schedulingapplication.Main.getLocale().equals("English")) {
             jlSelectLanguage.setText(LanguageModel.selectLanguageEnglish);
             jlLogin.setText(LanguageModel.loginEnglish);
             jlPassword.setText(LanguageModel.passwordEnglish);
             jbLogin.setText(LanguageModel.loginBtnEnglish);
             jbCancel.setText(LanguageModel.cancelEnglish);
-        } else if (locale.getLanguage().equals("Spanish")) {
+        } else if (schedulingapplication.Main.getLocale().equals("Spanish")) {
             jlSelectLanguage.setText(LanguageModel.selectLanguageSpanish);
             jlLogin.setText(LanguageModel.loginBtnSpanish);
             jlPassword.setText(LanguageModel.passwordSpanish);
@@ -216,9 +218,9 @@ public class UserPanel extends javax.swing.JPanel {
         
         if (success) {
             jlSuccessFailed.setForeground(Color.GREEN);
-            if (locale.getLanguage().equals("English")) {
+            if (schedulingapplication.Main.getLocale().equals("English")) {
                 jlSuccessFailed.setText(LanguageModel.successEnglish);
-            } else if (locale.getLanguage().equals("Spanish")) {
+            } else if (schedulingapplication.Main.getLocale().equals("Spanish")) {
                 jlSuccessFailed.setText(LanguageModel.successSpanish);
             } else {
                 jlSuccessFailed.setText(LanguageModel.successFrench);
