@@ -71,6 +71,12 @@ If there is no Advanced tab, then you are not logged in with administrative priv
 6. Click OK
 7. Restart the computer to apply the change.
 
+Alternately, you can comment/uncomment the following lines of code in Main.java:
+-public static Locale locale= Locale.getDefault();    
+-//public static Locale locale= new Locale("en","US");
+-//public static Locale locale= new Locale("es","ES");
+-//public static Locale locale = new Locale("fr","FR");
+
 
 ## Support
 
