@@ -50,7 +50,7 @@ Schedule:
 - Lists the schedule for all appointments.
 
 Active Customers:
-- Lists all active customers.
+- Lists all active customers by Id and Name.
 
 ## Language support
 
