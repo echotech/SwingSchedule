@@ -31,7 +31,6 @@ public class UserPanel extends javax.swing.JPanel {
         jcbLanguage.setVisible(false);
         jlSelectLanguage.setVisible(false);
         
-        System.out.println(schedulingapplication.Main.getLocale());
     }
 
     /**

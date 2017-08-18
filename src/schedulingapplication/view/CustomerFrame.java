@@ -61,6 +61,8 @@ public class CustomerFrame extends JFrame {
         JMenu jmEdit = new JMenu("Edit");
         JMenuItem jmiEditCustomer = new JMenuItem("Edit Customers");
         jmiEditCustomer.addActionListener(e->editCustomer());
+        JMenuItem jmiEditAppointment = new JMenuItem("Edit Appointments");
+        jmiEditAppointment.addActionListener(e->editAppointment());
         JMenuItem jmiNumTypesByMonths = new JMenuItem("Number Types By Months");
         jmiNumTypesByMonths.addActionListener(e -> reportTypesByMonth());
         JMenuItem jmiSchedule = new JMenuItem("Schedule");
@@ -76,6 +78,7 @@ public class CustomerFrame extends JFrame {
         jmView.add(jmiMonthlyView);
         jmView.add(jmiWeeklyView);
         jmEdit.add(jmiEditCustomer);
+        jmEdit.add(jmiEditAppointment);
         jmFile.add(jmiExit);
         jmb.add(jmFile);
         jmb.add(jmReport);
@@ -88,6 +91,14 @@ public class CustomerFrame extends JFrame {
     private void editCustomer(){
         SwingUtilities.invokeLater(()->{
             new EditCustomerPanel("Edit Customers");
+        });
+        
+        
+    }
+    
+    private void editAppointment(){
+        SwingUtilities.invokeLater(()->{
+            new EditAppointmentPanel("Edit Appointments");
         });
         
         
