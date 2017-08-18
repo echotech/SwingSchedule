@@ -60,7 +60,7 @@ public class EditCustomerPanel extends JFrame {
         try {
             Connection con = TestConnection.getConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName, a.address, a.address2, a.phone, a.postalCode, ci.city\n"
+            ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName,  a.address, a.address2, a.phone, a.postalCode, ci.city, c.active\n"
                     + "from `U03q1A`.`customer` c\n"
                     + "join `U03q1A`.`address` a on c.addressId=a.addressId\n"
                     + "join `U03q1A`.`city` ci on a.cityId=ci.cityId;");
@@ -153,6 +153,18 @@ public class EditCustomerPanel extends JFrame {
                 ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
                 ps.execute();
                 System.out.println("Updated city.");
+            }
+            if (col == 7){
+            sql = "Update `U03q1A`.`customer` set `active`=? where `customerId`=?";
+
+                PreparedStatement ps = con.prepareStatement(sql);
+                if (table.getValueAt(row,col).toString().equalsIgnoreCase("true")){
+                    ps.setString(1, "1");}
+                if (table.getValueAt(row,col).toString().equalsIgnoreCase("false")){
+                    ps.setString(1, "0");}
+                ps.setInt(2, Integer.parseInt(table.getValueAt(row, 0).toString()));
+                ps.executeUpdate();
+                System.out.println("Updated active status");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
