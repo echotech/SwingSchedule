@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.TimerTask;
 import javax.swing.SwingUtilities;
 import schedulingapplication.model.Customer;
 import schedulingapplication.model.User;
@@ -88,6 +89,8 @@ public class UserPresenter implements ActionListener {
             view.getPanel().displayError(exc);
         }
     }
+    
+ 
     
     private void writeToFile() throws IOException {
         try (FileWriter fw = new FileWriter (new File ("user_acrivity.txt"), true)) {

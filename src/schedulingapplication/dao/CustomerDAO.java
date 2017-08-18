@@ -181,6 +181,40 @@ public class CustomerDAO {
         }
         return list;
     }
+    
+    public static List<Appointment> getMyAppointmentList() throws Exception {
+        List<Appointment> list = new ArrayList<>();
+        Connection con = TestConnection.getConnection();
+        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment` where `createdBy`='demo'";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Appointment appointment = new Appointment();
+            appointment.setId(rs.getInt(1));
+            appointment.setTitle(rs.getString(2));
+            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
+            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            list.add(appointment);
+        }
+        return list;
+    }
+    
+    public static List<Appointment> getMyAppointmentTimes() throws Exception {
+        List<Appointment> list = new ArrayList<>();
+        Connection con = TestConnection.getConnection();
+        String sql = "select  `start` from `U03q1A`.`appointment` where `createdBy`='demo'";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Appointment appointment = new Appointment();
+            appointment.setId(rs.getInt(1));
+            appointment.setTitle(rs.getString(2));
+            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
+            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            list.add(appointment);
+        }
+        return list;
+    }
 
     public static void addCountry(Country country) throws Exception {
         try {

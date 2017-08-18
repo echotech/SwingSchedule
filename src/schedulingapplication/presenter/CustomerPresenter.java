@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 import schedulingapplication.dao.CustomerDAO;
 import schedulingapplication.model.Address;
@@ -479,5 +480,16 @@ public class CustomerPresenter implements ActionListener {
         }
 
     }
+    
+       private TimerTask appReminder() {
+            return new MyTimerTask();
+}
+    
+    public class MyTimerTask extends TimerTask {
+        public void run() {
+        // Whatever the task should be
+        //TODO if (CustomerDAO.getMyAppointmentTimes==15 min before appointment)
+    }
+}
 
 }

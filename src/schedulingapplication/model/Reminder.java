@@ -32,7 +32,7 @@ public class Reminder {
     public Reminder(LocalDateTime reminderDate, 
             int snoozeIncrement, int snoozeIncrementTypeId, int appointmentId, 
             String createdBy, LocalDateTime createdDate, String remindercol) {
-        this.reminderId = nextId.incrementAndGet();
+        //this.reminderId = nextId.incrementAndGet();
         this.reminderDate = reminderDate;
         this.snoozeIncrement = snoozeIncrement;
         this.snoozeIncrementTypeId = snoozeIncrementTypeId;
