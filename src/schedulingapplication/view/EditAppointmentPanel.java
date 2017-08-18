@@ -66,7 +66,7 @@ public class EditAppointmentPanel extends JFrame {
             
 
             table.getModel().addTableModelListener((TableModelEvent e) -> {
-                System.out.println(e);
+                
                 try {
                     updateTable(e);
                 } catch (Exception ex) {
