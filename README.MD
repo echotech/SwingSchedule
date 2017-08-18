@@ -49,6 +49,8 @@ Number Types By Month:
 Schedule:
 - Lists the schedule for all appointments.
 
+Active Customers:
+- Lists all active customers.
 
 ## Language support
 

@@ -25,10 +25,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import schedulingapplication.dao.CustomerDAO;
 import schedulingapplication.dao.TestConnection;
 import schedulingapplication.model.Appointment;
+import schedulingapplication.model.Customer;
 import schedulingapplication.model.Schedule;
 import static schedulingapplication.view.EditCustomerPanel.buildTableModel;
 
@@ -60,11 +62,13 @@ public class CustomerFrame extends JFrame {
         JMenu jmView = new JMenu("View");
         JMenu jmEdit = new JMenu("Edit");
         JMenuItem jmiEditCustomer = new JMenuItem("Edit Customers");
-        jmiEditCustomer.addActionListener(e->editCustomer());
+        jmiEditCustomer.addActionListener(e -> editCustomer());
         JMenuItem jmiEditAppointment = new JMenuItem("Edit Appointments");
-        jmiEditAppointment.addActionListener(e->editAppointment());
+        jmiEditAppointment.addActionListener(e -> editAppointment());
         JMenuItem jmiNumTypesByMonths = new JMenuItem("Number Types By Months");
         jmiNumTypesByMonths.addActionListener(e -> reportTypesByMonth());
+        JMenuItem jmiActiveCustomers = new JMenuItem("Active Customers");
+        jmiActiveCustomers.addActionListener(e -> activeCustomerReport());
         JMenuItem jmiSchedule = new JMenuItem("Schedule");
         jmiSchedule.addActionListener(e -> reportSchedule());
         JMenuItem jmiMonthlyView = new JMenuItem("Monthly View");
@@ -75,6 +79,7 @@ public class CustomerFrame extends JFrame {
         jmiExit.addActionListener(e -> System.exit(0));
         jmReport.add(jmiNumTypesByMonths);
         jmReport.add(jmiSchedule);
+        jmReport.add(jmiActiveCustomers);
         jmView.add(jmiMonthlyView);
         jmView.add(jmiWeeklyView);
         jmEdit.add(jmiEditCustomer);
@@ -87,21 +92,19 @@ public class CustomerFrame extends JFrame {
 
         setJMenuBar(jmb);
     }
-    
-    private void editCustomer(){
-        SwingUtilities.invokeLater(()->{
+
+    private void editCustomer() {
+        SwingUtilities.invokeLater(() -> {
             new EditCustomerPanel("Edit Customers");
         });
-        
-        
+
     }
-    
-    private void editAppointment(){
-        SwingUtilities.invokeLater(()->{
+
+    private void editAppointment() {
+        SwingUtilities.invokeLater(() -> {
             new EditAppointmentPanel("Edit Appointments");
         });
-        
-        
+
     }
 
     private void monthlyView() {
@@ -160,6 +163,26 @@ public class CustomerFrame extends JFrame {
             jf.setLocationRelativeTo(null);
             jf.setVisible(true);
 
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(this, exc, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void activeCustomerReport() {
+        try {
+            Connection con = TestConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select c.customerId, c.customerName\n"
+                    + "from `U03q1A`.`customer` c\n"
+                    + "where `active`=1");
+            JTable table = new JTable(buildTableModel(rs));
+            
+
+            
+            
+            
+            Object[] options = {"Ok"};
+            int input = JOptionPane.showOptionDialog(null, new JScrollPane(table), "Active Customers", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
         } catch (Exception exc) {
             JOptionPane.showMessageDialog(this, exc, "Error", JOptionPane.ERROR_MESSAGE);
         }

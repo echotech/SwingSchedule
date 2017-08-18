@@ -61,7 +61,7 @@ public class UserPresenter implements ActionListener {
     }
 
     private void selectLanguage() {
-        String language = schedulingapplication.Main.getLocale();
+        
         view.getPanel().setLanguage();
     }
 

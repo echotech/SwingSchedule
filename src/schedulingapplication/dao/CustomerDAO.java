@@ -119,6 +119,23 @@ public class CustomerDAO {
         return list;
     }
     
+    public static List<Customer> getActiveCustomerCount() throws Exception {
+        List<Customer> list = new ArrayList<>();
+        Connection con = TestConnection.getConnection();
+        String sql = "select `customerId`, `customerName` from `U03q1A`.`customer` where `active`='1'";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        
+        Integer count = new Integer(rs.getInt(1));
+        while (rs.next()) {
+            Customer customer = new Customer();
+            customer.setId(rs.getInt(1));
+            customer.setName(rs.getString(2));
+            list.add(customer);
+        }
+        return list;
+    }
+    
     public static List<Incrementtypes> getTypeList() throws Exception {
         List<Incrementtypes> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
