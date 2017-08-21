@@ -97,8 +97,6 @@ public class CustomerPanel extends javax.swing.JPanel {
         jPanel8 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jtfDescription = new javax.swing.JTextField();
-        jLabel29 = new javax.swing.JLabel();
-        jtfTypeId = new javax.swing.JTextField();
         jbAddIncrement = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
 
@@ -474,8 +472,6 @@ public class CustomerPanel extends javax.swing.JPanel {
 
         jLabel28.setText("Enter description: ");
 
-        jLabel29.setText("Enter type id:");
-
         jbAddIncrement.setText("Add increment type");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -484,24 +480,17 @@ public class CustomerPanel extends javax.swing.JPanel {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel29)
-                    .addComponent(jLabel28))
+                .addComponent(jLabel28)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jtfDescription)
-                    .addComponent(jtfTypeId, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbAddIncrement, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
-                    .addComponent(jtfTypeId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28))
@@ -621,7 +610,6 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
@@ -658,7 +646,6 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jtfPostalCode;
     private javax.swing.JTextField jtfSnoozeIncr;
     private javax.swing.JTextField jtfTitle;
-    private javax.swing.JTextField jtfTypeId;
     private javax.swing.JTextField jtfUrl;
     private javax.swing.JSpinner startTimeApp;
     // End of variables declaration//GEN-END:variables
@@ -712,7 +699,6 @@ public class CustomerPanel extends javax.swing.JPanel {
         jtaContact.setText("");
         jtfUrl.setText("");
         jtfSnoozeIncr.setText("");
-        jtfTypeId.setText("");
         jtfDescription.setText("");
     }
 
@@ -810,10 +796,6 @@ public class CustomerPanel extends javax.swing.JPanel {
 
     public javax.swing.JTextField getJtfSnoozeIncr() {
         return jtfSnoozeIncr;
-    }
-
-    public javax.swing.JTextField getJtfTypeId() {
-        return jtfTypeId;
     }
 
     public org.jdesktop.swingx.JXDatePicker getDpEnterRemDate() {

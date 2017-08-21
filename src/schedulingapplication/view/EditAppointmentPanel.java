@@ -69,6 +69,7 @@ public class EditAppointmentPanel extends JFrame {
                 
                 try {
                     updateTable(e);
+                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

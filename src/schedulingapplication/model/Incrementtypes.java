@@ -13,8 +13,8 @@ public class Incrementtypes {
     
     private String incrementTypeDescription;
 
-    public Incrementtypes(int incrementTypeId, String incrementTypeDescription) {
-        this.incrementTypeId = incrementTypeId;
+    public Incrementtypes(String incrementTypeDescription) {
+        //this.incrementTypeId = incrementTypeId;
         this.incrementTypeDescription = incrementTypeDescription;
     }
     

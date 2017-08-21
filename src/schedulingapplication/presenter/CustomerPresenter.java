@@ -16,7 +16,11 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import schedulingapplication.dao.CustomerDAO;
 import schedulingapplication.model.Address;
 import schedulingapplication.model.Appointment;
@@ -68,6 +72,7 @@ public class CustomerPresenter implements ActionListener {
         updateCustomers();
         updateAppointments();
         updateTypes();
+        applyReminders();
     }
 
     private void updateTypes() {
@@ -170,13 +175,10 @@ public class CustomerPresenter implements ActionListener {
             if (desc.length() == 0) {
                 throw new Exception("Enter increment type description!");
             }
-            try {
-                id = nextIncId.incrementAndGet();
-            } catch (Exception exc) {
-                throw new Exception("Enter increment type id!");
-            }
+            
+            
             Incrementtypes type = new Incrementtypes(
-                    id,
+                    
                     desc);
             model.addType(type);
             view.getPanel().clearFields();
@@ -224,9 +226,57 @@ public class CustomerPresenter implements ActionListener {
                     "col");
             model.addReminder(reminder);
             view.getPanel().clearFields();
+            
 
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
+        }
+        
+        applyReminders();
+    }
+    
+    public void applyReminders() {
+        // Apply reminders.
+        try {
+            System.out.println("Timers Started");
+            List<Appointment> apps = CustomerDAO.getAppointmentList();
+            ExecutorService service = Executors.newFixedThreadPool(apps.size());
+            for (Appointment ap : apps) {
+                service.execute(() -> {
+
+                    try {
+
+                        Thread.sleep(5000);
+                    } catch (InterruptedException exc) {
+                    }
+                    LocalDateTime before15minues = ap.getStart().minusMinutes(15);
+                    while (LocalDateTime.now().isAfter(before15minues)
+                            && LocalDateTime.now().isBefore(ap.getStart())) {
+                        Object[] options = {"Snooze 5 Min", "Dismiss"};
+                        int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
+                                + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                        if (input == JOptionPane.YES_OPTION) {
+                            try {
+                                Thread.sleep(5 * 60 * 1000);
+                                System.out.println("Clicked Snooze");
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (input == JOptionPane.NO_OPTION) {
+                            System.out.println("Clicked Dismiss");
+                            break;
+                        }
+                        try {
+
+                            Thread.sleep(5000);
+                        } catch (InterruptedException exc) {
+                        }
+                    }
+                });
+            }
+        } catch (Exception exc) {
+            JOptionPane.showMessageDialog(null, "Reminders failed");
         }
     }
 
@@ -307,6 +357,7 @@ public class CustomerPresenter implements ActionListener {
         } catch (Exception exc) {
             view.getPanel().displayError(exc);
         }
+        applyReminders();
     }
 
     public void addCustomer() {
@@ -481,15 +532,6 @@ public class CustomerPresenter implements ActionListener {
 
     }
     
-       private TimerTask appReminder() {
-            return new MyTimerTask();
-}
-    
-    public class MyTimerTask extends TimerTask {
-        public void run() {
-        // Whatever the task should be
-        //TODO if (CustomerDAO.getMyAppointmentTimes==15 min before appointment)
-    }
-}
+
 
 }
