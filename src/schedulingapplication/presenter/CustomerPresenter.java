@@ -233,13 +233,14 @@ public class CustomerPresenter implements ActionListener {
         }
         
         applyReminders();
+        applyReminders();
     }
     
     public void applyReminders() {
         // Apply reminders.
         try {
             System.out.println("Timers Started");
-            List<Appointment> apps = CustomerDAO.getAppointmentList();
+            List<Appointment> apps = CustomerDAO.getMyAppointmentList();
             ExecutorService service = Executors.newFixedThreadPool(apps.size());
             for (Appointment ap : apps) {
                 service.execute(() -> {
