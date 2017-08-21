@@ -168,7 +168,7 @@ public class CustomerDAO {
     public static List<Appointment> getAppointmentList() throws Exception {
         List<Appointment> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
-        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment`";
+        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment` where `start`>=CURDATE()";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -185,7 +185,7 @@ public class CustomerDAO {
     public static List<Appointment> getMyAppointmentList() throws Exception {
         List<Appointment> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
-        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment` where `createdBy`='demo'";
+        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment` where `createdBy`='demo' and `start`>=CURDATE()";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
