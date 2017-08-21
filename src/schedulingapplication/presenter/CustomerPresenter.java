@@ -233,7 +233,7 @@ public class CustomerPresenter implements ActionListener {
         }
         
         applyReminders();
-        applyReminders();
+        
     }
     
     public void applyReminders() {
