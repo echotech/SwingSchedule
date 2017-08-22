@@ -13,11 +13,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import static java.time.temporal.ChronoUnit.MINUTES;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -241,45 +245,48 @@ public class CustomerPresenter implements ActionListener {
         try {
             System.out.println("Timers Started");
             List<Appointment> apps = CustomerDAO.getMyAppointmentList();
-            ExecutorService service = Executors.newFixedThreadPool(apps.size());
-            for (Appointment ap : apps) {
-                service.execute(() -> {
+            ScheduledExecutorService service = Executors.newScheduledThreadPool(apps.size());
+            service.scheduleAtFixedRate(() -> {
+                for (Appointment ap : apps) {
 
-                    try {
-
-                        Thread.sleep(5000);
-                    } catch (InterruptedException exc) {
-                    }
-                    LocalDateTime before15minues = ap.getStart().minusMinutes(15);
-                    while (LocalDateTime.now().isAfter(before15minues)
+                    LocalDateTime before15minutes = ap.getStart().minusMinutes(15);
+                    while (LocalDateTime.now().isAfter(before15minutes)
                             && LocalDateTime.now().isBefore(ap.getStart())) {
+                        if (ap.getReminded()) {
+                            break;
+                        }
                         Object[] options = {"Snooze 5 Min", "Dismiss"};
                         int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
                                 + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
                         if (input == JOptionPane.YES_OPTION) {
-                            try {
-                                Thread.sleep(5 * 60 * 1000);
-                                System.out.println("Clicked Snooze");
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            if (ap.getSnoozeCounter() != 0) {
+                                ap.decrementSnoozeCounter();
+                                continue;
                             }
+                            System.out.println("Clicked Snooze");
                         }
                         if (input == JOptionPane.NO_OPTION) {
                             System.out.println("Clicked Dismiss");
+                            ap.setReminded(1);
+                            try {
+                                CustomerDAO.updateAppointment(1, ap.getId());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         }
-                        try {
 
-                            Thread.sleep(5000);
-                        } catch (InterruptedException exc) {
-                        }
                     }
-                });
-            }
+                }
+            }, 0, 30, TimeUnit.SECONDS);
+            
         } catch (Exception exc) {
+            exc.printStackTrace();
             JOptionPane.showMessageDialog(null, "Reminders failed");
         }
     }
+    
+     
 
     public void addAppointment() {
         try {

@@ -27,8 +27,9 @@ public class Appointment extends ScheduleItem {
     private String url;
     
     private LocalDateTime start;
-    
+    private int beenReminded;
     private LocalDateTime end;
+    private int snoozeCounter;
     
     public Appointment(LocalDateTime createDate, String createdBy, 
             int customerId, String title, String description, String location, String contact, 
@@ -42,12 +43,22 @@ public class Appointment extends ScheduleItem {
         this.url = url;
         this.start = start;
         this.end = end;
+        this.snoozeCounter=10;
+        
     }
     
     public Appointment() {
         
     }
-
+    
+    public int getSnoozeCounter(){
+        return snoozeCounter;
+    }
+    
+    public void decrementSnoozeCounter(){
+        this.snoozeCounter-=5;
+    }
+    
     public int getCustomerId() {
         return customerId;
     }
@@ -63,6 +74,18 @@ public class Appointment extends ScheduleItem {
     public void setTitle(String title) {
         this.title = title;
     }
+    
+    public void setReminded(int i){
+        this.beenReminded=i;
+    }
+    
+    public boolean getReminded(){
+        if (beenReminded==0){
+            return false;
+        }
+        else return true;
+    }
+    
 
     public String getDescription() {
         return description;

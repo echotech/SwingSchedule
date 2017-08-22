@@ -185,7 +185,7 @@ public class CustomerDAO {
     public static List<Appointment> getMyAppointmentList() throws Exception {
         List<Appointment> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
-        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment` where `createdBy`='demo' and `start`>=CURDATE()";
+        String sql = "select `appointmentId`, `title`, `start`, `end`, `beenReminded` from `U03q1A`.`appointment` where `createdBy`='demo' and `start`>=CURDATE()";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -194,10 +194,13 @@ public class CustomerDAO {
             appointment.setTitle(rs.getString(2));
             appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
             appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            appointment.setReminded(rs.getInt(5));
             list.add(appointment);
         }
         return list;
     }
+    
+   
     
     public static List<Appointment> getMyAppointmentTimes() throws Exception {
         List<Appointment> list = new ArrayList<>();
@@ -214,6 +217,24 @@ public class CustomerDAO {
             list.add(appointment);
         }
         return list;
+    }
+    
+        
+    public Appointment getAppointment(int id) throws Exception {
+        Connection con = TestConnection.getConnection();
+        String sql = "select  `start` from `U03q1A`.`appointment` where `appointmentId`=" + id;
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        Appointment appointment = new Appointment();
+        while (rs.next()) {
+
+            appointment.setId(rs.getInt(1));
+            appointment.setTitle(rs.getString(2));
+            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
+            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+
+        }
+        return appointment;
     }
 
     public static void addCountry(Country country) throws Exception {
@@ -333,10 +354,11 @@ public class CustomerDAO {
         ps.setString(8, "col");
         ps.executeUpdate();
     }
-
+    
+    
     public static void addAppointment(Appointment appointment) throws Exception {
         Connection con = TestConnection.getConnection();
-        String sql = "insert into `U03q1A`.`appointment` values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into `U03q1A`.`appointment` values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = con.prepareStatement(sql);
         ps.setInt(1, appointment.getId());
         ps.setInt(2, appointment.getCustomerId());
@@ -353,9 +375,18 @@ public class CustomerDAO {
         ps.setString(11, "demo");
         ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(13, "demo");
+        ps.setInt(14,0);
         ps.executeUpdate();
     }
     
+    public static void updateAppointment(int rem, int id) throws Exception {
+        Connection con = TestConnection.getConnection();
+        String sql = "update `U03q1A`.`appointment` set beenReminded=? where appointmentId=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.setInt(2, rem);
+    }
+       
     public static void addType(Incrementtypes type) throws Exception {
         Connection con = TestConnection.getConnection();
         String sql = "insert into `U03q1A`.`incrementtypes` values (?,?)";
