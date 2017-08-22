@@ -110,16 +110,7 @@ public class CustomerPresenter implements ActionListener {
         }
     }
 
-    private void updateAddresses() {
-        try {
-            //view.getPanel().getJcbAddresses().removeAllItems();
-            //List<Address> addresses = model.getAddressList();
-            // addresses.forEach(a -> view.getPanel().getJcbAddresses().addItem(a));
-        } catch (Exception exc) {
-            view.getPanel().displayError(exc);
-        }
-    }
-
+    
     private void updateCountries() {
         try {
             
@@ -245,24 +236,29 @@ public class CustomerPresenter implements ActionListener {
         try {
             System.out.println("Timers Started");
             List<Appointment> apps = CustomerDAO.getMyAppointmentList();
-            ScheduledExecutorService service = Executors.newScheduledThreadPool(apps.size());
+            ScheduledExecutorService service = Executors.newScheduledThreadPool(5);
             service.scheduleAtFixedRate(() -> {
                 for (Appointment ap : apps) {
-
+                    //int snoozeMin=15;
                     LocalDateTime before15minutes = ap.getStart().minusMinutes(15);
+//                    if(ap.getSnoozeCounter()<10){
+//                            before15minutes=ap.getStart().minusMinutes(snoozeMin);
+//                        }
                     while (LocalDateTime.now().isAfter(before15minutes)
                             && LocalDateTime.now().isBefore(ap.getStart())) {
                         if (ap.getReminded()) {
                             break;
                         }
+                        
                         Object[] options = {"Snooze 5 Min", "Dismiss"};
                         int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
                                 + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
                         if (input == JOptionPane.YES_OPTION) {
                             if (ap.getSnoozeCounter() != 0) {
                                 ap.decrementSnoozeCounter();
+                                before15minutes= LocalDateTime.now().plusMinutes(5);
                                 continue;
-                            }
+                                }
                             System.out.println("Clicked Snooze");
                         }
                         if (input == JOptionPane.NO_OPTION) {

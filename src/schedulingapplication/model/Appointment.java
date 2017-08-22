@@ -56,7 +56,7 @@ public class Appointment extends ScheduleItem {
     }
     
     public void decrementSnoozeCounter(){
-        this.snoozeCounter-=5;
+        this.snoozeCounter--;
     }
     
     public int getCustomerId() {
