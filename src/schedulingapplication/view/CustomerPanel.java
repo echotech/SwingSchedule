@@ -84,7 +84,6 @@ public class CustomerPanel extends javax.swing.JPanel {
         startTimeApp = new javax.swing.JSpinner( new SpinnerDateModel() );
         endTimeApp = new javax.swing.JSpinner(new SpinnerDateModel());
         jbRefreshCust = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Schedule Element"));
 
@@ -400,67 +399,48 @@ public class CustomerPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
-
-        jLabel9.setText("Customer Info");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 12, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 18, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddCustomerActionPerformed
-
-    }//GEN-LAST:event_jbAddCustomerActionPerformed
-
-    private void jtfCustNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCustNameActionPerformed
+    private void jbRefreshCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshCustActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfCustNameActionPerformed
+    }//GEN-LAST:event_jbRefreshCustActionPerformed
 
     private void jcbCountriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCountriesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbCountriesActionPerformed
-
-    private void jchbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbActiveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jchbActiveActionPerformed
 
     private void jtfAddress1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAddress1ActionPerformed
         // TODO add your handling code here:
@@ -470,9 +450,17 @@ public class CustomerPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCreatedByActionPerformed
 
-    private void jbRefreshCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRefreshCustActionPerformed
-        // TODO add your handling code here:              
-    }//GEN-LAST:event_jbRefreshCustActionPerformed
+    private void jbAddCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAddCustomerActionPerformed
+
+    }//GEN-LAST:event_jbAddCustomerActionPerformed
+
+    private void jchbActiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbActiveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jchbActiveActionPerformed
+
+    private void jtfCustNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCustNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfCustNameActionPerformed
 
     public void displayError(Exception exc) {
          JOptionPane.showMessageDialog(this, exc.getMessage(), "Exception occurred",
@@ -499,7 +487,6 @@ public class CustomerPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
