@@ -79,11 +79,8 @@ public class Appointment extends ScheduleItem {
         this.beenReminded=i;
     }
     
-    public boolean getReminded(){
-        if (beenReminded==0){
-            return false;
-        }
-        else return true;
+    public int getReminded(){
+        return beenReminded;
     }
     
 

@@ -381,10 +381,11 @@ public class CustomerDAO {
     
     public static void updateAppointment(int rem, int id) throws Exception {
         Connection con = TestConnection.getConnection();
-        String sql = "update `U03q1A`.`appointment` set beenReminded=? where appointmentId=?";
+        String sql = "update `U03q1A`.`appointment` set `beenReminded`=? where `appointmentId`=?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, id);
-        ps.setInt(2, rem);
+        ps.setInt(1, rem);
+        ps.setInt(2, id);
+        ps.executeUpdate();
     }
        
     public static void addType(Incrementtypes type) throws Exception {

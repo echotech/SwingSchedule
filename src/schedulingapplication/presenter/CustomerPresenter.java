@@ -246,36 +246,35 @@ public class CustomerPresenter implements ActionListener {
 //                        }
                     while (LocalDateTime.now().isAfter(before15minutes)
                             && LocalDateTime.now().isBefore(ap.getStart())) {
-                        if (ap.getReminded()) {
-                            break;
-                        }
-                        
-                        Object[] options = {"Snooze 5 Min", "Dismiss"};
-                        int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
-                                + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
-                        if (input == JOptionPane.YES_OPTION) {
-                            if (ap.getSnoozeCounter() != 0) {
-                                ap.decrementSnoozeCounter();
-                                before15minutes= LocalDateTime.now().plusMinutes(5);
-                                continue;
-                                }
-                            System.out.println("Clicked Snooze");
-                        }
-                        if (input == JOptionPane.NO_OPTION) {
-                            System.out.println("Clicked Dismiss");
-                            ap.setReminded(1);
-                            try {
-                                CustomerDAO.updateAppointment(1, ap.getId());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        }
+                        if (ap.getReminded() == 0) {
+                            Object[] options = {"Snooze 5 Min", "Dismiss"};
+                            int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
+                                    + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                            if (input == JOptionPane.YES_OPTION) {
+                                if (ap.getSnoozeCounter() != 0) {
+                                    ap.decrementSnoozeCounter();
+                                    before15minutes = LocalDateTime.now().plusMinutes(5);
 
+                                }
+                                System.out.println("Clicked Snooze");
+                            }
+                            if (input == JOptionPane.NO_OPTION) {
+                                System.out.println("Clicked Dismiss");
+                                ap.setReminded(1);
+                                try {
+                                    CustomerDAO.updateAppointment(1, ap.getId());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+
+                        } else {
+                            break;
+                        }
                     }
                 }
-            }, 0, 30, TimeUnit.SECONDS);
-            
+            }, 0, 10, TimeUnit.SECONDS);
         } catch (Exception exc) {
             exc.printStackTrace();
             JOptionPane.showMessageDialog(null, "Reminders failed");
