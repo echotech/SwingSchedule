@@ -66,40 +66,17 @@ public class CustomerPresenter implements ActionListener {
         //view.getPanel().getJbAddAddress().setActionCommand("addaddress");
         view.getPanel().getJbAddCustomer().setActionCommand("addcustomer");
         view.getPanel().getJbAddAppointment().setActionCommand("addappointment");
-        view.getPanel().getJbAddReminder().setActionCommand("addreminder");
-        view.getPanel().getJbAddIncrement().setActionCommand("addincrement");
         view.getPanel().getJbRefreshCust().setActionCommand("refreshcust");
 
         updateCountries();
         //updateCities();
         //updateAddresses();
         updateCustomers();
-        updateAppointments();
-        updateTypes();
+           
         applyReminders();
     }
 
-    private void updateTypes() {
-        try {
-            view.getPanel().getJcbTypes().removeAllItems();
-            List<Incrementtypes> types = model.getTypeList();
-            types.forEach(a -> view.getPanel().getJcbTypes().addItem(a));
-        } catch (Exception exc) {
-            view.getPanel().displayError(exc);
-        }
-    }
-
-    private void updateAppointments() {
-        try {
-            view.getPanel().getJcbAppointments().removeAllItems();
-            List<Appointment> appointments = model.getAppointmentList();
-            appointments.forEach(a -> view.getPanel().getJcbAppointments().addItem(a));
-        } catch (Exception exc) {
-            view.getPanel().displayError(exc);
-            exc.printStackTrace();
-        }
-    }
-
+    
     public void updateCustomers() {
         try {
             view.getPanel().getJcbCustomers().removeAllItems();
@@ -127,8 +104,6 @@ public class CustomerPresenter implements ActionListener {
         //view.getPanel().getJbAddAddress().addActionListener(this);
         view.getPanel().getJbAddCustomer().addActionListener(this);
         view.getPanel().getJbAddAppointment().addActionListener(this);
-        view.getPanel().getJbAddReminder().addActionListener(this);
-        view.getPanel().getJbAddIncrement().addActionListener(this);
         view.getPanel().getJbRefreshCust().addActionListener(this);
     }
 
@@ -150,86 +125,13 @@ public class CustomerPresenter implements ActionListener {
             case "addappointment":
                 addAppointment();
                 break;
-            case "addreminder":
-                addReminder();
-                break;
-            case "addincrement":
-                addIncrement();
-                break;
             case "refreshcust":
                 updateCustomers();
                 break;
         }
     }
 
-    public void addIncrement() {
-
-        try {
-            int id;
-            String desc = view.getPanel().getJtfDescription().getText().trim();
-            if (desc.length() == 0) {
-                throw new Exception("Enter increment type description!");
-            }
-            
-            
-            Incrementtypes type = new Incrementtypes(
-                    
-                    desc);
-            model.addType(type);
-            view.getPanel().clearFields();
-            updateTypes();
-
-        } catch (Exception exc) {
-            view.getPanel().displayError(exc);
-        }
-    }
-
-    public void addReminder() {
-        try {
-
-            LocalDateTime date;
-            try {
-                date = LocalDateTime.ofInstant(view.getPanel().getDpEnterRemDate().getDate().toInstant(), ZoneId.systemDefault());
-            } catch (Exception exc) {
-                throw new Exception("Enter reminder date!");
-            }
-
-            int incr;
-            try {
-                incr = Integer.parseInt(view.getPanel().getJtfSnoozeIncr().getText().trim());
-            } catch (Exception exc) {
-                throw new Exception("Enter snooze increment!");
-            }
-            LocalDateTime createDate;
-
-            try {
-                createDate = LocalDateTime.now();
-            } catch (Exception exc) {
-                throw new Exception("Enter create date!");
-            }
-            String createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
-            if (createdBy.length() == 0) {
-                throw new Exception("Enter created by!");
-            }
-            Reminder reminder = new Reminder(
-                    date,
-                    incr,
-                    ((Incrementtypes) view.getPanel().getJcbTypes().getSelectedItem()).getIncrementTypeId(),
-                    ((Appointment) view.getPanel().getJcbAppointments().getSelectedItem()).getId(),
-                    createdBy,
-                    createDate,
-                    "col");
-            model.addReminder(reminder);
-            view.getPanel().clearFields();
-            
-
-        } catch (Exception exc) {
-            view.getPanel().displayError(exc);
-        }
-        
-        applyReminders();
-        
-    }
+    
     
     public void applyReminders() {
         // Apply reminders.
@@ -351,7 +253,7 @@ public class CustomerPresenter implements ActionListener {
                     ldtStart,
                     ldtEnd);
             model.addAppointment(appointment);
-            updateAppointments();
+            
             view.getPanel().clearFields();
 
         } catch (Exception exc) {
