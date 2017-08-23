@@ -239,27 +239,16 @@ public class CustomerPresenter implements ActionListener {
             ScheduledExecutorService service = Executors.newScheduledThreadPool(5);
             service.scheduleAtFixedRate(() -> {
                 for (Appointment ap : apps) {
-                    //int snoozeMin=15;
                     LocalDateTime before15minutes = ap.getStart().minusMinutes(15);
-//                    if(ap.getSnoozeCounter()<10){
-//                            before15minutes=ap.getStart().minusMinutes(snoozeMin);
-//                        }
+                    outerloop:
                     while (LocalDateTime.now().isAfter(before15minutes)
                             && LocalDateTime.now().isBefore(ap.getStart())) {
                         if (ap.getReminded() == 0) {
-                            Object[] options = {"Snooze 5 Min", "Dismiss"};
+                            System.out.println(before15minutes);
+                            Object[] options = {"Ok", "Dismiss"};
                             int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
                                     + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
                             if (input == JOptionPane.YES_OPTION) {
-                                if (ap.getSnoozeCounter() != 0) {
-                                    ap.decrementSnoozeCounter();
-                                    before15minutes = LocalDateTime.now().plusMinutes(5);
-
-                                }
-                                System.out.println("Clicked Snooze");
-                            }
-                            if (input == JOptionPane.NO_OPTION) {
-                                System.out.println("Clicked Dismiss");
                                 ap.setReminded(1);
                                 try {
                                     CustomerDAO.updateAppointment(1, ap.getId());
@@ -268,7 +257,15 @@ public class CustomerPresenter implements ActionListener {
                                 }
                                 break;
                             }
-
+                            if (input == JOptionPane.NO_OPTION) {
+                                ap.setReminded(1);
+                                try {
+                                    CustomerDAO.updateAppointment(1, ap.getId());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
                         } else {
                             break;
                         }
