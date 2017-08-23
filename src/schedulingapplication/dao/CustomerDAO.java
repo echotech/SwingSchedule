@@ -404,7 +404,8 @@ public class CustomerDAO {
                + "`title`, `description`, `start`, `end` from `U03q1A`.`customer`, "
                + "`U03q1A`.`address`, `U03q1A`.`city`, `U03q1A`.`country`, `U03q1A`.`appointment` where "
                + "`customer`.`addressId`=`address`.`addressId` and "
-               + "`address`.`cityId`=`city`.`cityId` and `city`.`countryId`=`country`.`countryId`";
+               + "`address`.`cityId`=`city`.`cityId` and `city`.`countryId`=`country`.`countryId`"
+               + "and `appointment`.`start`>=CURDATE()";
        PreparedStatement ps = con.prepareStatement(sql);
        ResultSet rs = ps.executeQuery();
         while (rs.next()) {
