@@ -168,7 +168,7 @@ public class CustomerDAO {
     public static List<Appointment> getAppointmentList() throws Exception {
         List<Appointment> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
-        String sql = "select `appointmentId`, `title`, `start`, `end` from `U03q1A`.`appointment` where `start`>=CURDATE()";
+        String sql = "select `appointmentId`, `title`, `start`, `end`, `createdBy` from `U03q1A`.`appointment` where `start`>=CURDATE()";
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -177,6 +177,7 @@ public class CustomerDAO {
             appointment.setTitle(rs.getString(2));
             appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
             appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            appointment.setCreatedBy(rs.getString(5));
             list.add(appointment);
         }
         return list;

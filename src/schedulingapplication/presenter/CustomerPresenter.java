@@ -7,6 +7,7 @@ package schedulingapplication.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -179,6 +180,8 @@ public class CustomerPresenter implements ActionListener {
             LocalTime startTime = Instant.ofEpochMilli(((java.util.Date) view.getPanel().getStartTimeApp().getValue()).getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
             LocalTime endTime = Instant.ofEpochMilli(((java.util.Date) view.getPanel().getEndTimeApp().getValue()).getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
             LocalDate startDate, endDate;
+            
+            
 
             if (startTime.isAfter(LocalTime.of(21, 0))) {
                 throw new Exception("We close at 9pm. \n please pick another time.");
@@ -200,6 +203,18 @@ public class CustomerPresenter implements ActionListener {
 
             ldtStart = LocalDateTime.of(startDate, startTime);
             ldtEnd = LocalDateTime.of(endDate, endTime);
+            List<Appointment> app=CustomerDAO.getAppointmentList();
+            
+            for(Appointment a:app){
+               if(a.getCreatedBy().equals(view.getPanel().getJtfCreatedBy().getText().trim())){
+                if (((ldtStart.isBefore(a.getEnd()))&& ldtStart.isAfter(a.getStart()))||(ldtEnd.isBefore(a.getEnd())&&(ldtEnd.isAfter(a.getStart())))){
+                    throw new Exception("The start or end time conflicts with this appointment.");
+                }
+                if ((a.getStart().isAfter(ldtStart)&&(a.getEnd().isBefore(ldtEnd)))||((a.getStart().isEqual(ldtStart))&&(a.getEnd().isEqual(ldtEnd)))){
+                    throw new Exception("This completely conflicts with another appointment.");
+                }
+               }
+            }
 
             LocalDateTime createDate;
             String createdBy;
