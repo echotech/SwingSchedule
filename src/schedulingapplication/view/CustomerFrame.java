@@ -66,7 +66,7 @@ public class CustomerFrame extends JFrame {
         jmiEditCustomer.addActionListener(e -> editCustomer());
         JMenuItem jmiEditAppointment = new JMenuItem("Edit Appointments");
         jmiEditAppointment.addActionListener(e -> editAppointment());
-        JMenuItem jmiNumTypesByMonths = new JMenuItem("Number Types By Months");
+        JMenuItem jmiNumTypesByMonths = new JMenuItem("Number Of Appointments By Month");
         jmiNumTypesByMonths.addActionListener(e -> reportTypesByMonth());
         JMenuItem jmiActiveCustomers = new JMenuItem("Active Customers");
         jmiActiveCustomers.addActionListener(e -> activeCustomerReport());
@@ -122,21 +122,23 @@ public class CustomerFrame extends JFrame {
 
     private void reportTypesByMonth() {
         try {
-            List<Appointment> listApp = CustomerDAO.getAppointmentList();
-            Map<Month, Integer> mapMonthNum = new HashMap<>();
-            listApp.forEach(ap -> {
-                System.out.println(ap.getStart());
-                if (mapMonthNum.containsKey(ap.getStart().getMonth())) {
-                    mapMonthNum.put(ap.getStart().getMonth(), mapMonthNum.get(ap.getStart().getMonth()) + 1);
-                } else {
-                    mapMonthNum.put(ap.getStart().getMonth(), 1);
-                }
-            });
-            StringBuilder sb = new StringBuilder();
-            mapMonthNum.entrySet().forEach(e -> {
-                sb.append(e.getKey()).append(": ").append(e.getValue()).append("\n");
-            });
-            JOptionPane.showMessageDialog(this, sb);
+            
+            String january,february,march,april,may,june,july,august,september,october,november,december;
+            january="January: "+CustomerDAO.getAppointmentByMonth(1);
+            february="February: "+CustomerDAO.getAppointmentByMonth(2);
+            march="March: "+CustomerDAO.getAppointmentByMonth(3);
+            april="April: "+CustomerDAO.getAppointmentByMonth(4);
+            may="May: "+CustomerDAO.getAppointmentByMonth(5);
+            june="June: "+CustomerDAO.getAppointmentByMonth(6);
+            july="July: "+CustomerDAO.getAppointmentByMonth(7);
+            august="August: "+CustomerDAO.getAppointmentByMonth(8);
+            september="September: "+CustomerDAO.getAppointmentByMonth(9);
+            october="October: "+CustomerDAO.getAppointmentByMonth(10);
+            november="November: "+CustomerDAO.getAppointmentByMonth(11);
+            december="December: "+CustomerDAO.getAppointmentByMonth(12);
+           
+            
+            JOptionPane.showMessageDialog(this, (january+"\n"+february+"\n"+march+"\n"+april+"\n"+may+"\n"+june+"\n"+july+"\n"+august+"\n"+september+"\n"+october+"\n"+november+"\n"+december));
         } catch (Exception exc) {
             JOptionPane.showMessageDialog(this, exc, "Error", JOptionPane.ERROR_MESSAGE);
         }
