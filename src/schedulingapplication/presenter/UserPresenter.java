@@ -93,7 +93,7 @@ public class UserPresenter implements ActionListener {
  
     
     private void writeToFile() throws IOException {
-        try (FileWriter fw = new FileWriter (new File ("user_acrivity.txt"), true)) {
+        try (FileWriter fw = new FileWriter (new File ("user_activity.txt"), true)) {
             fw.write (model.toString() + "\r\nLogin: " + Timestamp.valueOf(LocalDateTime.now()) + "\r\n\r\n");
         }
     }

@@ -381,10 +381,11 @@ public class CustomerDAO {
     
     public static void updateAppointment(int rem, int id) throws Exception {
         Connection con = TestConnection.getConnection();
-        String sql = "update `U03q1A`.`appointment` set beenReminded=? where appointmentId=?";
+        String sql = "update `U03q1A`.`appointment` set `beenReminded`=? where `appointmentId`=?";
         PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, id);
-        ps.setInt(2, rem);
+        ps.setInt(1, rem);
+        ps.setInt(2, id);
+        ps.executeUpdate();
     }
        
     public static void addType(Incrementtypes type) throws Exception {
@@ -403,7 +404,8 @@ public class CustomerDAO {
                + "`title`, `description`, `start`, `end` from `U03q1A`.`customer`, "
                + "`U03q1A`.`address`, `U03q1A`.`city`, `U03q1A`.`country`, `U03q1A`.`appointment` where "
                + "`customer`.`addressId`=`address`.`addressId` and "
-               + "`address`.`cityId`=`city`.`cityId` and `city`.`countryId`=`country`.`countryId`";
+               + "`address`.`cityId`=`city`.`cityId` and `city`.`countryId`=`country`.`countryId`"
+               + "and `appointment`.`start`>=CURDATE()";
        PreparedStatement ps = con.prepareStatement(sql);
        ResultSet rs = ps.executeQuery();
         while (rs.next()) {
