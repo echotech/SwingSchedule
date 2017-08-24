@@ -198,11 +198,6 @@ public class CustomerFrame extends JFrame {
                     + "from `U03q1A`.`customer` c\n"
                     + "where `active`=1");
             JTable table = new JTable(buildTableModel(rs));
-            
-
-            
-            
-            
             Object[] options = {"Ok"};
             int input = JOptionPane.showOptionDialog(null, new JScrollPane(table), "Active Customers", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
         } catch (Exception exc) {
