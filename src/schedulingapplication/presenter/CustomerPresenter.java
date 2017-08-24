@@ -7,33 +7,23 @@ package schedulingapplication.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import static java.time.temporal.ChronoUnit.MINUTES;
-import java.util.Date;
 import java.util.List;
-import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import schedulingapplication.dao.CustomerDAO;
 import schedulingapplication.model.Address;
 import schedulingapplication.model.Appointment;
 import schedulingapplication.model.City;
 import schedulingapplication.model.Country;
 import schedulingapplication.model.Customer;
-import schedulingapplication.model.Incrementtypes;
-import schedulingapplication.model.Reminder;
-import schedulingapplication.model.User;
 import schedulingapplication.view.CustomerFrame;
 
 /**
@@ -189,11 +179,19 @@ public class CustomerPresenter implements ActionListener {
             LocalTime startTime = Instant.ofEpochMilli(((java.util.Date) view.getPanel().getStartTimeApp().getValue()).getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
             LocalTime endTime = Instant.ofEpochMilli(((java.util.Date) view.getPanel().getEndTimeApp().getValue()).getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
             LocalDate startDate, endDate;
-            try {
-                startDate = view.getPanel().getDpStartDate().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            } catch (Exception exc) {
-                throw new Exception("Enter start date!");
+
+            if (startTime.isAfter(LocalTime.of(21, 0))) {
+                throw new Exception("We close at 9pm. \n please pick another time.");
+            } else if (startTime.isBefore(LocalTime.of(9, 0))) {
+                throw new Exception("We do not open until 9am. \n please pick another time.");
+            } else {
+                try {
+                    startDate = view.getPanel().getDpStartDate().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                } catch (Exception exc) {
+                    throw new Exception("Enter start date!");
+                }
             }
+
             try {
                 endDate = view.getPanel().getDpEndDate().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             } catch (Exception exc) {
@@ -213,7 +211,7 @@ public class CustomerPresenter implements ActionListener {
             }
 
             createdBy = view.getPanel().getJtfCreatedBy().getText().trim();
-            
+
             if (createdBy.length() == 0) {
                 throw new Exception("Enter created by!");
             }
@@ -253,7 +251,7 @@ public class CustomerPresenter implements ActionListener {
                     ldtStart,
                     ldtEnd);
             model.addAppointment(appointment);
-            
+
             view.getPanel().clearFields();
 
         } catch (Exception exc) {
