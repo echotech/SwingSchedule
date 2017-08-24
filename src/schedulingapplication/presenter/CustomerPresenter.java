@@ -136,17 +136,17 @@ public class CustomerPresenter implements ActionListener {
     public void applyReminders() {
         // Apply reminders.
         try {
-            System.out.println("Timers Started");
+            
             List<Appointment> apps = CustomerDAO.getMyAppointmentList();
             ScheduledExecutorService service = Executors.newScheduledThreadPool(5);
             service.scheduleAtFixedRate(() -> {
                 for (Appointment ap : apps) {
                     LocalDateTime before15minutes = ap.getStart().minusMinutes(15);
-                    outerloop:
+                    
                     while (LocalDateTime.now().isAfter(before15minutes)
                             && LocalDateTime.now().isBefore(ap.getStart())) {
                         if (ap.getReminded() == 0) {
-                            System.out.println(before15minutes);
+                            
                             Object[] options = {"Ok", "Dismiss"};
                             int input = JOptionPane.showOptionDialog(null, "Reminder!\nAppointment: "
                                     + ap.getTitle() + "\nStart date: " + ap.getStart(), "Appointment Reminder!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);

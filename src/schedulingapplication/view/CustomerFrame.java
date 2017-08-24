@@ -32,6 +32,7 @@ import schedulingapplication.dao.TestConnection;
 import schedulingapplication.model.Appointment;
 import schedulingapplication.model.Customer;
 import schedulingapplication.model.Schedule;
+import static schedulingapplication.view.EditAppointmentPanel.buildTableModel;
 import static schedulingapplication.view.EditCustomerPanel.buildTableModel;
 
 /**
@@ -40,9 +41,9 @@ import static schedulingapplication.view.EditCustomerPanel.buildTableModel;
 public class CustomerFrame extends JFrame {
 
     private CustomerPanel panel;
-
-    private final String[] COL_NAMES = {"CustomerName", "Active", "City",
-        "Countty", "Title", "Description", "Start", "End"};
+    
+    private final String[] COL_NAMES = {"Consultant", "Customer", "City", "Country", "Title",
+        "Description", "Start", "End"};
 
     public CustomerFrame(String title) {
         super(title);
@@ -143,29 +144,50 @@ public class CustomerFrame extends JFrame {
 
     private void reportSchedule() {
         try {
-            List<Schedule> sch = CustomerDAO.getSchedule();
+            Connection con = TestConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select appointmentId, customerId, title, description, location, contact, url, start, end, createdBy from `U03q1A`.`appointment` order by createdBy" );
+            JTable table = new JTable(buildTableModel(rs));
+            table.putClientProperty("terminateEditOnFocusLost", true);
+            
+            Object[] options = {"Ok"};
+            int input = JOptionPane.showOptionDialog(null, new JScrollPane(table), "Schedule By Consultant", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
 
-            DefaultTableModel dtm = new DefaultTableModel(COL_NAMES, 0);
-            JTable jt = new JTable(dtm);
-            sch.forEach(e -> {
-                System.out.println("1");
-                dtm.addRow(new Object[]{e.getCustomer().getName(),
-                    e.getCustomer().isActive(), e.getCity(), e.getCountry(), e.getAppointment().getTitle(),
-                    e.getAppointment().getDescription(), e.getAppointment().getStart(),
-                    e.getAppointment().getEnd()});
-            });
-            JPanel jpReport = new JPanel(new BorderLayout());
-            jpReport.add(new JScrollPane(jt), BorderLayout.CENTER);
-            JFrame jf = new JFrame("Schedule");
-            jf.add(jpReport);
-            jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            jf.pack();
-            jf.setLocationRelativeTo(null);
-            jf.setVisible(true);
+            if (input == JOptionPane.OK_OPTION) {
+                
+            }
 
-        } catch (Exception exc) {
-            JOptionPane.showMessageDialog(this, exc, "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+
+            System.out.println("Initcomponents broke.");
+            e.printStackTrace();
         }
+    }
+    
+    public static DefaultTableModel buildTableModel(ResultSet rs)
+            throws SQLException {
+
+        ResultSetMetaData metaData = rs.getMetaData();
+
+        // names of columns
+        Vector<String> columnNames = new Vector<String>();
+        int columnCount = metaData.getColumnCount();
+        for (int column = 1; column <= columnCount; column++) {
+            columnNames.add(metaData.getColumnName(column));
+        }
+
+        // data of the table
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+        while (rs.next()) {
+            Vector<Object> vector = new Vector<Object>();
+            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+                vector.add(rs.getObject(columnIndex));
+            }
+            data.add(vector);
+        }
+
+        return new DefaultTableModel(data, columnNames);
+
     }
     
     private void activeCustomerReport() {

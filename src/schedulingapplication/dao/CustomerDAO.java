@@ -372,9 +372,9 @@ public class CustomerDAO {
         Date sqlDate = new Date(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(10, sqlDate);
         //TODO Fixme
-        ps.setString(11, "demo");
+        ps.setString(11, appointment.getCreatedBy());
         ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
-        ps.setString(13, "demo");
+        ps.setString(13, appointment.getCreatedBy());
         ps.setInt(14,0);
         ps.executeUpdate();
     }
@@ -400,7 +400,7 @@ public class CustomerDAO {
     public static List<Schedule> getSchedule() throws Exception {
         Connection con = TestConnection.getConnection();
         List<Schedule> schedule = new ArrayList<>();
-       String sql = "select `customer`.`customerName`, `customer`.`active`, `city`, `country`, "
+       String sql = "select `customer`.`customerName`, `customer`.`active`, `city`, `country`, `appointment`.`createdBy`,"
                + "`title`, `description`, `start`, `end` from `U03q1A`.`customer`, "
                + "`U03q1A`.`address`, `U03q1A`.`city`, `U03q1A`.`country`, `U03q1A`.`appointment` where "
                + "`customer`.`addressId`=`address`.`addressId` and "
@@ -418,15 +418,17 @@ public class CustomerDAO {
             customer.setActive(rs.getBoolean(2));
             city.setCity(rs.getString(3));
             country.setCountry(rs.getString(4));
-            app.setTitle(rs.getString(5));
-            app.setDescription(rs.getString(6));
-            app.setStart(rs.getTimestamp(7).toLocalDateTime());
-            app.setEnd(rs.getTimestamp(8).toLocalDateTime());
+            app.setCreatedBy(rs.getString(5));
+            app.setTitle(rs.getString(6));
+            app.setDescription(rs.getString(7));
+            app.setStart(rs.getTimestamp(8).toLocalDateTime());
+            app.setEnd(rs.getTimestamp(9).toLocalDateTime());
             Schedule sch = new Schedule();
             sch.setAppointment(app);
             sch.setCity(city);
             sch.setCountry(country);
             sch.setCustomer(customer);
+            sch.getAppointment().getCreatedBy();
             schedule.add(sch);
         }
         
