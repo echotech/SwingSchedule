@@ -61,7 +61,7 @@ public class EditAppointmentPanel extends JFrame {
         try {
             Connection con = TestConnection.getConnection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select appointmentId, customerId, title, description, location, contact, url, start, end, createdBy from `U03q1A`.`appointment`" );
+            ResultSet rs = stmt.executeQuery("select appointmentId, customerId, title, description, location, contact, url, start, end, createdBy from `U03q1A`.`appointment` order by createdBy" );
             JTable table = new JTable(buildTableModel(rs));
             
 
@@ -80,8 +80,7 @@ public class EditAppointmentPanel extends JFrame {
             int input = JOptionPane.showOptionDialog(null, new JScrollPane(table), "Edit Appointments", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
 
             if (input == JOptionPane.OK_OPTION) {
-                //TODO add logic that updates customers combobox
-                //System.out.println("Clicked Ok");
+                
             }
 
         } catch (Exception e) {
