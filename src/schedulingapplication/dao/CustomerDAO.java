@@ -183,6 +183,21 @@ public class CustomerDAO {
         return list;
     }
     
+    public static int getAppointmentByMonth(int mon) throws Exception {
+        int count=0;
+        Connection con = TestConnection.getConnection();
+        String sql = "select count(*) from `U03q1A`.`appointment` where MONTH(start)=?";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, mon);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            count=rs.getInt(1);
+        }
+        return count;
+    }
+    
+    
+    
     public static List<Appointment> getMyAppointmentList() throws Exception {
         List<Appointment> list = new ArrayList<>();
         Connection con = TestConnection.getConnection();
