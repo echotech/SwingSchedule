@@ -423,8 +423,9 @@ public class CustomerDAO {
     public static List<Schedule> getSchedule() throws Exception {
         Connection con = TestConnection.getConnection();
         List<Schedule> schedule = new ArrayList<>();
-        String sql = "select `customer`.`createdBy`, `customer`.`customerName`, `customer`.`active`, `city`, `country`, "
-                + "`appointment`.`title`, `appointment`.`description`, `appointment`.`start`, `appointment`.`end` from `U03q1A`.`customer`"
+        String sql = "select  `customer`.`createdBy`, `customer`.`customerName`, `customer`.`active`, `city`, `country`, "
+                + "`appointment`.`title`, `appointment`.`description`, `appointment`.`start`, `appointment`.`end`, `appointment`.`appointmentId`,  "
+                + "`appointment`.`url`,  `appointment`.`location`, `customer`.`customerId` from `U03q1A`.`customer`"
                 + "join `U03q1A`.`address` on `customer`.`addressId`=`address`.`addressId`\n"
                 + "               join `U03q1A`.`city` on `address`.`cityId`=`city`.`cityId`\n"
                 + "               join `U03q1A`.`country` on `city`.`countryId`=`country`.`countryId`\n"
@@ -447,6 +448,10 @@ public class CustomerDAO {
             app.setStart(start.withZoneSameInstant(ZoneId.systemDefault()));
             ZonedDateTime end = ZonedDateTime.of(rs.getTimestamp(9).toLocalDateTime(), ZoneId.of("UTC"));
             app.setEnd(end.withZoneSameInstant(ZoneId.systemDefault()));
+            app.setId(rs.getInt(10));
+            app.setLocation(rs.getString(11));
+            app.setUrl(rs.getString(12));
+            customer.setId(rs.getInt(13));
             Schedule sch = new Schedule();
             sch.setAppointment(app);
             sch.setCity(city);
