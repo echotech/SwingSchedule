@@ -41,7 +41,7 @@ import static schedulingapplication.view.EditCustomerPanel.buildTableModel;
 public class CustomerFrame extends JFrame {
 
     private CustomerPanel panel;
-    
+
     private final String[] COL_NAMES = {"Consultant", "Customer", "City", "Country", "Title",
         "Description", "Start", "End"};
 
@@ -122,23 +122,22 @@ public class CustomerFrame extends JFrame {
 
     private void reportTypesByMonth() {
         try {
-            
-            String january,february,march,april,may,june,july,august,september,october,november,december;
-            january="January: "+CustomerDAO.getAppointmentByMonth(1);
-            february="February: "+CustomerDAO.getAppointmentByMonth(2);
-            march="March: "+CustomerDAO.getAppointmentByMonth(3);
-            april="April: "+CustomerDAO.getAppointmentByMonth(4);
-            may="May: "+CustomerDAO.getAppointmentByMonth(5);
-            june="June: "+CustomerDAO.getAppointmentByMonth(6);
-            july="July: "+CustomerDAO.getAppointmentByMonth(7);
-            august="August: "+CustomerDAO.getAppointmentByMonth(8);
-            september="September: "+CustomerDAO.getAppointmentByMonth(9);
-            october="October: "+CustomerDAO.getAppointmentByMonth(10);
-            november="November: "+CustomerDAO.getAppointmentByMonth(11);
-            december="December: "+CustomerDAO.getAppointmentByMonth(12);
-           
-            
-            JOptionPane.showMessageDialog(this, (january+"\n"+february+"\n"+march+"\n"+april+"\n"+may+"\n"+june+"\n"+july+"\n"+august+"\n"+september+"\n"+october+"\n"+november+"\n"+december));
+
+            String january, february, march, april, may, june, july, august, september, october, november, december;
+            january = "January: " + CustomerDAO.getAppointmentByMonth(1);
+            february = "February: " + CustomerDAO.getAppointmentByMonth(2);
+            march = "March: " + CustomerDAO.getAppointmentByMonth(3);
+            april = "April: " + CustomerDAO.getAppointmentByMonth(4);
+            may = "May: " + CustomerDAO.getAppointmentByMonth(5);
+            june = "June: " + CustomerDAO.getAppointmentByMonth(6);
+            july = "July: " + CustomerDAO.getAppointmentByMonth(7);
+            august = "August: " + CustomerDAO.getAppointmentByMonth(8);
+            september = "September: " + CustomerDAO.getAppointmentByMonth(9);
+            october = "October: " + CustomerDAO.getAppointmentByMonth(10);
+            november = "November: " + CustomerDAO.getAppointmentByMonth(11);
+            december = "December: " + CustomerDAO.getAppointmentByMonth(12);
+
+            JOptionPane.showMessageDialog(this, (january + "\n" + february + "\n" + march + "\n" + april + "\n" + may + "\n" + june + "\n" + july + "\n" + august + "\n" + september + "\n" + october + "\n" + november + "\n" + december));
         } catch (Exception exc) {
             JOptionPane.showMessageDialog(this, exc, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -146,18 +145,25 @@ public class CustomerFrame extends JFrame {
 
     private void reportSchedule() {
         try {
-            Connection con = TestConnection.getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select appointmentId, customerId, title, description, location, contact, url, start, end, createdBy from `U03q1A`.`appointment` order by createdBy" );
-            JTable table = new JTable(buildTableModel(rs));
-            table.putClientProperty("terminateEditOnFocusLost", true);
-            
-            Object[] options = {"Ok"};
-            int input = JOptionPane.showOptionDialog(null, new JScrollPane(table), "Schedule By Consultant", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+            List<Schedule> sch = CustomerDAO.getSchedule();
 
-            if (input == JOptionPane.OK_OPTION) {
-                
-            }
+            DefaultTableModel dtm = new DefaultTableModel(COL_NAMES, 0);
+            JTable jt = new JTable(dtm);
+            sch.forEach(e -> {
+
+                dtm.addRow(new Object[]{e.getAppointment().getCreatedBy(), e.getCustomer().getName(),
+                    e.getCity(), e.getCountry(), e.getAppointment().getTitle(),
+                    e.getAppointment().getDescription(), e.getAppointment().getStart(),
+                    e.getAppointment().getEnd()});
+            });
+            JPanel jpReport = new JPanel(new BorderLayout());
+            jpReport.add(new JScrollPane(jt), BorderLayout.CENTER);
+            JFrame jf = new JFrame("Schedule");
+            jf.add(jpReport);
+            jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            jf.pack();
+            jf.setLocationRelativeTo(null);
+            jf.setVisible(true);
 
         } catch (Exception e) {
 
@@ -165,7 +171,7 @@ public class CustomerFrame extends JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public static DefaultTableModel buildTableModel(ResultSet rs)
             throws SQLException {
 
@@ -191,7 +197,7 @@ public class CustomerFrame extends JFrame {
         return new DefaultTableModel(data, columnNames);
 
     }
-    
+
     private void activeCustomerReport() {
         try {
             Connection con = TestConnection.getConnection();

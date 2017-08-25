@@ -8,6 +8,7 @@ package schedulingapplication.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 
 /**
  *
@@ -26,14 +27,14 @@ public class Appointment extends ScheduleItem {
     
     private String url;
     
-    private LocalDateTime start;
+    private ZonedDateTime start;
     private int beenReminded;
-    private LocalDateTime end;
+    private ZonedDateTime end;
     private int snoozeCounter;
     
     public Appointment(LocalDateTime createDate, String createdBy, 
             int customerId, String title, String description, String location, String contact, 
-            String url, LocalDateTime start, LocalDateTime end) {
+            String url, ZonedDateTime start, ZonedDateTime end) {
         super(createDate, createdBy);
         this.customerId = customerId;
         this.title = title;
@@ -116,19 +117,19 @@ public class Appointment extends ScheduleItem {
         this.url = url;
     }
 
-    public LocalDateTime getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(ZonedDateTime start) {
         this.start = start;
     }
 
-    public LocalDateTime getEnd() {
+    public ZonedDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDateTime end) {
+    public void setEnd(ZonedDateTime end) {
         this.end = end;
     }
     

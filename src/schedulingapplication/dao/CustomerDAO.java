@@ -10,9 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.List;
@@ -167,6 +168,7 @@ public class CustomerDAO {
     
     public static List<Appointment> getAppointmentList() throws Exception {
         List<Appointment> list = new ArrayList<>();
+        ;
         Connection con = TestConnection.getConnection();
         String sql = "select `appointmentId`, `title`, `start`, `end`, `createdBy` from `U03q1A`.`appointment` where `start`>=CURDATE()";
         PreparedStatement ps = con.prepareStatement(sql);
@@ -175,8 +177,10 @@ public class CustomerDAO {
             Appointment appointment = new Appointment();
             appointment.setId(rs.getInt(1));
             appointment.setTitle(rs.getString(2));
-            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
-            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            ZonedDateTime start = ZonedDateTime.of(rs.getTimestamp(3).toLocalDateTime(), ZoneId.of("UTC"));
+            appointment.setStart(start.withZoneSameInstant(ZoneId.systemDefault()));
+            ZonedDateTime end = ZonedDateTime.of(rs.getTimestamp(4).toLocalDateTime(), ZoneId.of("UTC"));
+            appointment.setEnd(end.withZoneSameInstant(ZoneId.systemDefault()));
             appointment.setCreatedBy(rs.getString(5));
             list.add(appointment);
         }
@@ -208,13 +212,17 @@ public class CustomerDAO {
             Appointment appointment = new Appointment();
             appointment.setId(rs.getInt(1));
             appointment.setTitle(rs.getString(2));
-            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
-            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            ZonedDateTime start = ZonedDateTime.of(rs.getTimestamp(3).toLocalDateTime(), ZoneId.of("UTC"));
+            appointment.setStart(start.withZoneSameInstant(ZoneId.systemDefault()));
+            ZonedDateTime end = ZonedDateTime.of(rs.getTimestamp(4).toLocalDateTime(), ZoneId.of("UTC"));
+            appointment.setEnd(end.withZoneSameInstant(ZoneId.systemDefault()));
             appointment.setReminded(rs.getInt(5));
             list.add(appointment);
         }
         return list;
     }
+    
+    
     
    
     
@@ -228,8 +236,8 @@ public class CustomerDAO {
             Appointment appointment = new Appointment();
             appointment.setId(rs.getInt(1));
             appointment.setTitle(rs.getString(2));
-            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
-            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            appointment.setStart(ZonedDateTime.of(rs.getTimestamp(3).toLocalDateTime(), ZoneId.systemDefault()));
+            appointment.setEnd(ZonedDateTime.of(rs.getTimestamp(4).toLocalDateTime(), ZoneId.systemDefault()));
             list.add(appointment);
         }
         return list;
@@ -246,8 +254,8 @@ public class CustomerDAO {
 
             appointment.setId(rs.getInt(1));
             appointment.setTitle(rs.getString(2));
-            appointment.setStart(rs.getTimestamp(3).toLocalDateTime());
-            appointment.setEnd(rs.getTimestamp(4).toLocalDateTime());
+            appointment.setStart(ZonedDateTime.of(rs.getTimestamp(3).toLocalDateTime(), ZoneId.systemDefault()));
+            appointment.setEnd(ZonedDateTime.of(rs.getTimestamp(4).toLocalDateTime(), ZoneId.systemDefault()));
 
         }
         return appointment;
@@ -383,11 +391,10 @@ public class CustomerDAO {
         ps.setString(5, appointment.getLocation());
         ps.setString(6, appointment.getContact());
         ps.setString(7, appointment.getUrl());
-        ps.setTimestamp(8, Timestamp.valueOf(appointment.getStart()));
-        ps.setTimestamp(9, Timestamp.valueOf(appointment.getEnd()));
+        ps.setTimestamp(8, Timestamp.valueOf(appointment.getStart().toLocalDateTime()));
+        ps.setTimestamp(9, Timestamp.valueOf(appointment.getEnd().toLocalDateTime()));
         Date sqlDate = new Date(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
         ps.setDate(10, sqlDate);
-        //TODO Fixme
         ps.setString(11, appointment.getCreatedBy());
         ps.setTimestamp(12, new Timestamp(java.util.Date.from(appointment.getCreateDate().atZone(ZoneId.systemDefault()).toInstant()).getTime()));
         ps.setString(13, appointment.getCreatedBy());
@@ -416,29 +423,30 @@ public class CustomerDAO {
     public static List<Schedule> getSchedule() throws Exception {
         Connection con = TestConnection.getConnection();
         List<Schedule> schedule = new ArrayList<>();
-       String sql = "select `customer`.`customerName`, `customer`.`active`, `city`, `country`, `appointment`.`createdBy`,"
-               + "`title`, `description`, `start`, `end` from `U03q1A`.`customer`, "
-               + "`U03q1A`.`address`, `U03q1A`.`city`, `U03q1A`.`country`, `U03q1A`.`appointment` where "
-               + "`customer`.`addressId`=`address`.`addressId` and "
-               + "`address`.`cityId`=`city`.`cityId` and `city`.`countryId`=`country`.`countryId`"
-               + "and `appointment`.`start`>=CURDATE()";
-       PreparedStatement ps = con.prepareStatement(sql);
-       ResultSet rs = ps.executeQuery();
+        String sql = "select `customer`.`createdBy`, `customer`.`customerName`, `customer`.`active`, `city`, `country`, "
+                + "`appointment`.`title`, `appointment`.`description`, `appointment`.`start`, `appointment`.`end` from `U03q1A`.`customer`"
+                + "join `U03q1A`.`address` on `customer`.`addressId`=`address`.`addressId`\n"
+                + "               join `U03q1A`.`city` on `address`.`cityId`=`city`.`cityId`\n"
+                + "               join `U03q1A`.`country` on `city`.`countryId`=`country`.`countryId`\n"
+                + "               join `U03q1A`.`appointment` on `customer`.`customerId`=`appointment`.`customerId`";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             Customer customer = new Customer();
             Appointment app = new Appointment();
             City city = new City();
             Country country = new Country();
-            
-            customer.setName(rs.getString(1));
-            customer.setActive(rs.getBoolean(2));
-            city.setCity(rs.getString(3));
-            country.setCountry(rs.getString(4));
-            app.setCreatedBy(rs.getString(5));
+            app.setCreatedBy(rs.getString(1));
+            customer.setName(rs.getString(2));
+            customer.setActive(rs.getBoolean(3));
+            city.setCity(rs.getString(4));
+            country.setCountry(rs.getString(5));
             app.setTitle(rs.getString(6));
             app.setDescription(rs.getString(7));
-            app.setStart(rs.getTimestamp(8).toLocalDateTime());
-            app.setEnd(rs.getTimestamp(9).toLocalDateTime());
+            ZonedDateTime start = ZonedDateTime.of(rs.getTimestamp(8).toLocalDateTime(), ZoneId.of("UTC"));
+            app.setStart(start.withZoneSameInstant(ZoneId.systemDefault()));
+            ZonedDateTime end = ZonedDateTime.of(rs.getTimestamp(9).toLocalDateTime(), ZoneId.of("UTC"));
+            app.setEnd(end.withZoneSameInstant(ZoneId.systemDefault()));
             Schedule sch = new Schedule();
             sch.setAppointment(app);
             sch.setCity(city);
@@ -447,7 +455,7 @@ public class CustomerDAO {
             sch.getAppointment().getCreatedBy();
             schedule.add(sch);
         }
-        
+
         return schedule;
     }
 

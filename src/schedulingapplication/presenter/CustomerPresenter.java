@@ -7,12 +7,15 @@ package schedulingapplication.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -132,10 +135,10 @@ public class CustomerPresenter implements ActionListener {
             ScheduledExecutorService service = Executors.newScheduledThreadPool(5);
             service.scheduleAtFixedRate(() -> {
                 for (Appointment ap : apps) {
-                    LocalDateTime before15minutes = ap.getStart().minusMinutes(15);
+                    LocalDateTime before15minutes = (ap.getStart().toLocalDateTime()).minusMinutes(15);
                     
                     while (LocalDateTime.now().isAfter(before15minutes)
-                            && LocalDateTime.now().isBefore(ap.getStart())) {
+                            && LocalDateTime.now().isBefore(ap.getStart().toLocalDateTime())) {
                         if (ap.getReminded() == 0) {
                             
                             Object[] options = {"Ok", "Dismiss"};
@@ -171,7 +174,7 @@ public class CustomerPresenter implements ActionListener {
         }
     }
     
-     
+      
 
     public void addAppointment() {
         try {
@@ -179,9 +182,8 @@ public class CustomerPresenter implements ActionListener {
             LocalDateTime ldtEnd = null;
             LocalTime startTime = Instant.ofEpochMilli(((java.util.Date) view.getPanel().getStartTimeApp().getValue()).getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
             LocalTime endTime = Instant.ofEpochMilli(((java.util.Date) view.getPanel().getEndTimeApp().getValue()).getTime()).atZone(ZoneId.systemDefault()).toLocalTime();
+
             LocalDate startDate, endDate;
-            
-            
 
             if (startTime.isAfter(LocalTime.of(21, 0))) {
                 throw new Exception("We close at 9pm. \n please pick another time.");
@@ -203,17 +205,31 @@ public class CustomerPresenter implements ActionListener {
 
             ldtStart = LocalDateTime.of(startDate, startTime);
             ldtEnd = LocalDateTime.of(endDate, endTime);
-            List<Appointment> app=CustomerDAO.getAppointmentList();
-            
-            for(Appointment a:app){
-               if(a.getCreatedBy().equals(view.getPanel().getJtfCreatedBy().getText().trim())){
-                if (((ldtStart.isBefore(a.getEnd()))&& ldtStart.isAfter(a.getStart()))||(ldtEnd.isBefore(a.getEnd())&&(ldtEnd.isAfter(a.getStart())))){
-                    throw new Exception("The start or end time conflicts with this appointment.");
+            //ZonedDateTime
+            ZonedDateTime localStart = ZonedDateTime.of(ldtStart, ZoneId.systemDefault());
+            ZonedDateTime localEnd = ZonedDateTime.of(ldtEnd, ZoneId.systemDefault());
+            ZonedDateTime zonedStart = localStart.withZoneSameInstant(ZoneOffset.UTC);
+            ZonedDateTime zonedEnd = localEnd.withZoneSameInstant(ZoneOffset.UTC);
+            System.out.println(zonedStart);
+            System.out.println(zonedStart.toLocalDateTime());
+            System.out.println(Timestamp.from(zonedStart.toInstant()));
+
+            //Check for conflicts
+            List<Appointment> app = CustomerDAO.getAppointmentList();
+
+            for (Appointment a : app) {
+                LocalDateTime getStart = (a.getStart().withZoneSameInstant(ZoneId.systemDefault())).toLocalDateTime();
+
+                LocalDateTime getEnd = (a.getEnd().withZoneSameInstant(ZoneId.systemDefault())).toLocalDateTime();
+
+                if (a.getCreatedBy().equals(view.getPanel().getJtfCreatedBy().getText().trim())) {
+                    if (((ldtStart.isBefore(getEnd)) && ldtStart.isAfter(getStart)) || (ldtEnd.isBefore(getEnd) && (ldtEnd.isAfter(getStart)))) {
+                        throw new Exception("The start or end time conflicts with this appointment.");
+                    }
+                    if ((getStart.isAfter(ldtStart) && (getEnd.isBefore(ldtEnd))) || ((getStart.isEqual(ldtStart)) && (getEnd.isEqual(ldtEnd)))) {
+                        throw new Exception("This completely conflicts with another appointment.");
+                    }
                 }
-                if ((a.getStart().isAfter(ldtStart)&&(a.getEnd().isBefore(ldtEnd)))||((a.getStart().isEqual(ldtStart))&&(a.getEnd().isEqual(ldtEnd)))){
-                    throw new Exception("This completely conflicts with another appointment.");
-                }
-               }
             }
 
             LocalDateTime createDate;
@@ -263,8 +279,8 @@ public class CustomerPresenter implements ActionListener {
                     location,
                     contact,
                     url,
-                    ldtStart,
-                    ldtEnd);
+                    zonedStart,
+                    zonedEnd);
             model.addAppointment(appointment);
 
             view.getPanel().clearFields();
